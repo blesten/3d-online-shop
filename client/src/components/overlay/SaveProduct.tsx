@@ -3,6 +3,7 @@ import { FaAngleDown, FaAngleUp } from 'react-icons/fa6'
 import { AiOutlineClose } from 'react-icons/ai'
 import { v4 as uuidv4 } from 'uuid'
 import { uploadImages } from '../../utils/cloudinary'
+import { toast } from 'react-toastify'
 import Loader from '../general/Loader'
 
 interface IProps {
@@ -13,6 +14,12 @@ interface IProps {
   isShirtTexture: boolean
   shirtLogo: string
   shirtTexture: string
+  setIsCustomize: React.Dispatch<React.SetStateAction<boolean>>
+  setShirtColor: React.Dispatch<React.SetStateAction<string>>
+  setIsLogoTexture: React.Dispatch<React.SetStateAction<boolean>>
+  setIsShirtTexture: React.Dispatch<React.SetStateAction<boolean>>
+  setShirtLogo: React.Dispatch<React.SetStateAction<string>>
+  setShirtTexture: React.Dispatch<React.SetStateAction<string>>
 }
 
 const convertURLToBlob = async(url: string) => {
@@ -21,7 +28,21 @@ const convertURLToBlob = async(url: string) => {
   return new File([blob], 'shirt_logo.png', { type: blob.type })
 }
 
-const SaveProduct = ({ openSaveProductOverlay, setOpenSaveProductOverlay, shirtColor, isLogoTexture, isShirtTexture, shirtLogo, shirtTexture }: IProps) => {
+const SaveProduct = ({
+  openSaveProductOverlay,
+  setOpenSaveProductOverlay,
+  shirtColor,
+  isLogoTexture,
+  isShirtTexture,
+  shirtLogo,
+  shirtTexture,
+  setIsCustomize,
+  setShirtColor,
+  setIsLogoTexture,
+  setIsShirtTexture,
+  setShirtLogo,
+  setShirtTexture
+}: IProps) => {
   const [showSizeDetail, setShowSizeDetail] = useState(false)
 
   const [loading, setLoading] = useState(false)
@@ -72,6 +93,13 @@ const SaveProduct = ({ openSaveProductOverlay, setOpenSaveProductOverlay, shirtC
       setName('')
       setSize('')
       setLoading(false)
+      setIsCustomize(false)
+      setShirtColor('#FF7640')
+      setIsLogoTexture(true)
+      setIsShirtTexture(false)
+      setShirtLogo('/images/default_texture.png')
+      setShirtTexture('/images/default_texture.png')
+      toast.success('T-Shirt has been saved successfully')
     }
   }
 
