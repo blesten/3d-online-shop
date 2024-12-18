@@ -11,7 +11,9 @@ const Navbar = () => {
         <h1 className='text-primary font-semibold text-lg'>Stitch Lab</h1>
       </Link>
       <div className='flex items-center gap-9'>
-        <IoBookmarkOutline className='text-2xl text-primary cursor-pointer' />
+        <Link to='/saved'>
+          <IoBookmarkOutline className='text-2xl text-primary cursor-pointer' />
+        </Link>
         <MdOutlineShoppingBag className='text-2xl text-primary cursor-pointer' />
         <Button
           text='Sign In'

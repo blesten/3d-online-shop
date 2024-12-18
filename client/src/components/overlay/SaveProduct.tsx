@@ -3,8 +3,10 @@ import { FaAngleDown, FaAngleUp } from 'react-icons/fa6'
 import { AiOutlineClose } from 'react-icons/ai'
 import { v4 as uuidv4 } from 'uuid'
 import { uploadImages } from '../../utils/cloudinary'
+import { useSnapshot } from 'valtio'
 import { toast } from 'react-toastify'
 import Loader from '../general/Loader'
+import state from './../../store'
 
 interface IProps {
   openSaveProductOverlay: boolean
@@ -43,6 +45,8 @@ const SaveProduct = ({
   setShirtLogo,
   setShirtTexture
 }: IProps) => {
+  const snap = useSnapshot(state)
+
   const [showSizeDetail, setShowSizeDetail] = useState(false)
 
   const [loading, setLoading] = useState(false)
@@ -86,6 +90,11 @@ const SaveProduct = ({
         isShirtTexture,
         createdAt: new Date()
       }
+
+      state.saved = [
+        ...snap.saved,
+        newData
+      ]
 
       localStorage.setItem('SL_SAVED_T_SHIRT', JSON.stringify([...prevSavedData, newData]))
 
