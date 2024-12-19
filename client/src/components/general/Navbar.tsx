@@ -1,9 +1,11 @@
 import { MdShoppingBag , MdOutlineShoppingBag } from 'react-icons/md'
 import { IoBookmark, IoBookmarkOutline } from 'react-icons/io5'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import Button from './Button'
 
 const Navbar = () => {
+  const { pathname } = useLocation()
+
   return (
     <div className='flex items-center justify-between px-20 py-8'>
       <Link to='/' className='flex items-center gap-5 outline-none'>
@@ -12,7 +14,11 @@ const Navbar = () => {
       </Link>
       <div className='flex items-center gap-9'>
         <Link to='/saved'>
-          <IoBookmarkOutline className='text-2xl text-primary cursor-pointer' />
+          {
+            pathname === '/saved'
+            ? <IoBookmark className='text-2xl text-primary cursor-pointer' />
+            : <IoBookmarkOutline className='text-2xl text-primary cursor-pointer' />
+          }
         </Link>
         <MdOutlineShoppingBag className='text-2xl text-primary cursor-pointer' />
         <Button

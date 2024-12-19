@@ -23,7 +23,7 @@ interface IProps {
   setShirtLogo: React.Dispatch<React.SetStateAction<string>>
   setShirtTexture: React.Dispatch<React.SetStateAction<string>>
 }
-
+  
 const convertURLToBlob = async(url: string) => {
   const response = await fetch(url)
   const blob = await response.blob()
@@ -54,6 +54,11 @@ const SaveProduct = ({
   const [size, setSize] = useState('')
 
   const saveProductOverlayRef = useRef() as React.MutableRefObject<HTMLDivElement>
+
+  const handleCloseOverlay = () => {
+    if (!loading)
+      setOpenSaveProductOverlay(false)
+  }
 
   const handleSaveProduct = async(e: FormEvent) => {
     e.preventDefault()
@@ -114,21 +119,21 @@ const SaveProduct = ({
 
   useEffect(() => {
     const checkIfClickedOutside = (e: MouseEvent) => {
-      if (openSaveProductOverlay && saveProductOverlayRef.current && !saveProductOverlayRef.current.contains(e.target as Node)) {
+      if (!loading && openSaveProductOverlay && saveProductOverlayRef.current && !saveProductOverlayRef.current.contains(e.target as Node)) {
         setOpenSaveProductOverlay(false)
       }
     }
 
     document.addEventListener('mousedown', checkIfClickedOutside)
     return () => document.removeEventListener('mousedown', checkIfClickedOutside)
-  }, [openSaveProductOverlay, setOpenSaveProductOverlay])
+  }, [loading, openSaveProductOverlay, setOpenSaveProductOverlay])
 
   return (
     <div className={`fixed top-0 left-0 bottom-0 right-0 bg-[rgba(0,0,0,.8)] flex items-center justify-center z-30 transition duration-200 ${openSaveProductOverlay ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
       <div ref={saveProductOverlayRef} className={`bg-white w-1/3 rounded-xl px-7 py-6 transition duration-200 delay-100 ${openSaveProductOverlay ? 'translate-y-0 pointer-events-auto opacity-100' : '-translate-y-12 pointer-events-none opacity-0'}`}>
         <div className='flex items-center justify-between'>
           <h1 className='font-medium'>Save T-Shirt</h1>
-          <AiOutlineClose onClick={() => setOpenSaveProductOverlay(false)} className='text-lg cursor-pointer' />
+          <AiOutlineClose onClick={handleCloseOverlay} className='text-lg cursor-pointer' />
         </div>
         <form onSubmit={handleSaveProduct} className='mt-6'>
           <div className='mb-6'>

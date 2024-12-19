@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, ChangeEvent } from 'react'
 import { IoMdArrowRoundBack } from 'react-icons/io'
-import { IoBookmarkOutline } from 'react-icons/io5'
 import { SketchPicker } from 'react-color'
+import { IoMdSave } from 'react-icons/io'
 import { FaImage } from 'react-icons/fa6'
 import SaveProduct from '../overlay/SaveProduct'
 import Button from './Button'
@@ -43,7 +43,6 @@ const Customizer = ({
   const colorPickerRef = useRef() as React.MutableRefObject<HTMLDivElement>
   const fileSelectorRef = useRef() as React.MutableRefObject<HTMLDivElement>
   const fileInputRef = useRef() as React.MutableRefObject<HTMLInputElement>
-
 
   const handleClickSelectImage = () => {
     fileInputRef.current.click()
@@ -161,7 +160,7 @@ const Customizer = ({
         </div>
         <div className='absolute top-1/2 right-12 -translate-y-1/2 py-4 rounded-md glassmorphism px-3 flex flex-col items-center gap-8'>
           <div onClick={() => setOpenSaveProductOverlay(true)}>
-            <IoBookmarkOutline className='text-3xl text-primary cursor-pointer' />
+            <IoMdSave className='text-3xl text-primary cursor-pointer' />
           </div>
         </div>
       </div>
