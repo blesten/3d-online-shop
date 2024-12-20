@@ -6,19 +6,26 @@ import { useSnapshot } from 'valtio'
 import { useEffect, useState } from 'react'
 import { IoMdTrash } from 'react-icons/io'
 import { Canvas } from '@react-three/fiber'
-import state from './../store'
-import Navbar from '../components/general/Navbar'
+import DeleteProduct from '../components/overlay/DeleteProduct'
 import StaticShirt from '../components/saved/StaticShirt'
+import Navbar from '../components/general/Navbar'
+import state from './../store'
 // @ts-ignore
 import 'swiper/css'
-import DeleteProduct from '../components/overlay/DeleteProduct'
+import { useNavigate } from 'react-router-dom'
 
 const Saved = () => {
   const [selectedId, setSelectedId] = useState('')
   const [selectedShirtName, setSelectedShirtName] = useState('')
   const [openDeleteProductOverlay, setOpenDeleteProductOverlay] = useState(false)
+
+  const navigate = useNavigate()
   
   const snap = useSnapshot(state)
+
+  const handleClickEdit = (id: string) => {
+    navigate(`/edit/${id}`)
+  }
 
   const handleClickDelete = (id: string, shirtName: string) => {
     setSelectedId(id)
@@ -73,7 +80,7 @@ const Saved = () => {
                     <div className='flex items-center justify-center glassmorphism rounded-lg w-fit m-auto mt-3 text-2xl gap-5 p-3'>
                       <MdOutlineShoppingBag className='text-primary cursor-pointer' />
                       <LuBadgeDollarSign className='text-green-500 cursor-pointer' />
-                      <MdEdit className='text-primary cursor-pointer' />
+                      <MdEdit onClick={() => handleClickEdit(item.id)} className='text-primary cursor-pointer' />
                       <IoMdTrash onClick={() => handleClickDelete(item.id, item.name)} className='text-red-500 cursor-pointer' />
                     </div>
                   </div>
