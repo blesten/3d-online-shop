@@ -4,8 +4,28 @@ import Home from './pages/Home'
 import Saved from './pages/Saved'
 import Edit from './pages/Edit'
 import Cart from './pages/Cart'
+import { useEffect } from 'react'
+import state from './store'
 
 const App = () => {
+  useEffect(() => {
+    const getSavedData = () => {
+      const savedData = JSON.parse(localStorage.getItem('SL_SAVED_T_SHIRT')!)
+      state.saved = savedData || []
+    }
+
+    getSavedData()
+  }, [])
+
+  useEffect(() => {
+    const getCartData = () => {
+      const cartData = JSON.parse(localStorage.getItem('SL_CART_ITEM')!)
+      state.cart = cartData || []
+    }
+
+    getCartData()
+  }, [])
+  
   return (
     <>
       <Router>

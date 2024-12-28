@@ -106,7 +106,7 @@ const CartItem = ({
   return (
     <div className={`flex items-center gap-7 ${loopIdx !== itemLength - 1 ? 'border-b border-neutral-300' : ''}  py-5 ${loopIdx === 0 ? '!pt-0' : ''} ${loopIdx === itemLength - 1 ? '!pb-0' : ''}`}>
       <div className='w-32 h-32 rounded-md bg-neutral-100 relative'>
-        <div className='absolute top-2 left-3'>
+        <div className='absolute top-2 left-3 z-20'>
           <input type='checkbox' onChange={handleChangeSelectedStatus} checked={isSelected} className='bg-primary' />
         </div>
         {/* image */}

@@ -1,30 +1,14 @@
 import { MdShoppingBag , MdOutlineShoppingBag } from 'react-icons/md'
 import { IoBookmark, IoBookmarkOutline } from 'react-icons/io5'
 import { Link, useLocation } from 'react-router-dom'
-import { useEffect } from 'react'
 import state from './../../store'
 import Button from './Button'
+import { useSnapshot } from 'valtio'
 
 const Navbar = () => {
   const { pathname } = useLocation()
 
-  useEffect(() => {
-    const getSavedData = () => {
-      const savedData = JSON.parse(localStorage.getItem('SL_SAVED_T_SHIRT')!)
-      state.saved = savedData || []
-    }
-
-    getSavedData()
-  }, [])
-
-  useEffect(() => {
-    const getCartData = () => {
-      const cartData = JSON.parse(localStorage.getItem('SL_CART_ITEM')!)
-      state.cart = cartData || []
-    }
-
-    getCartData()
-  }, [])
+  const snap = useSnapshot(state)
 
   return (
     <div className='flex items-center justify-between px-20 py-8'>
@@ -40,9 +24,9 @@ const Navbar = () => {
             : <IoBookmarkOutline className='text-2xl text-primary cursor-pointer' />
           }
           {
-            state.saved.length > 0 &&
+            snap.saved.length > 0 &&
             <div className='absolute -top-2 -right-2 w-5 h-5 bg-[#ffa987] rounded-full flex items-center justify-center text-xs text-white'>
-              <p>{state.saved.length}</p>
+              <p>{snap.saved.length}</p>
             </div>
           }
         </Link>
@@ -53,9 +37,9 @@ const Navbar = () => {
             : <MdOutlineShoppingBag className='text-2xl text-primary cursor-pointer' />
           }
           {
-            state.cart.length > 0 &&
+            snap.cart.length > 0 &&
             <div className='absolute -top-2 -right-2 w-5 h-5 bg-[#ffa987] rounded-full flex items-center justify-center text-xs text-white'>
-              <p>{state.cart.length}</p>
+              <p>{snap.cart.length}</p>
             </div>
           }
         </Link>

@@ -1,7 +1,7 @@
 import { MdShoppingBag, MdOutlineShoppingBag, MdEdit } from 'react-icons/md'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Center, Environment } from '@react-three/drei'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { LuBadgeDollarSign } from 'react-icons/lu'
 import { useNavigate } from 'react-router-dom'
 import { useSnapshot } from 'valtio'
@@ -73,24 +73,6 @@ const Saved = () => {
       toast.success('T-Shirt has been added to cart successfully')
     }
   }
-
-  useEffect(() => {
-    const getSavedData = () => {
-      const savedData = JSON.parse(localStorage.getItem('SL_SAVED_T_SHIRT')!)
-      state.saved = savedData || []
-    }
-
-    getSavedData()
-  }, [])
-
-  useEffect(() => {
-    const getCartData = () => {
-      const cartData = JSON.parse(localStorage.getItem('SL_CART_ITEM')!)
-      state.cart = cartData || []
-    }
-
-    getCartData()
-  }, [])
 
   return (
     <>
