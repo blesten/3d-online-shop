@@ -9,3 +9,11 @@ export interface ISaved {
   isShirtTexture: boolean
   createdAt: Date
 }
+
+export interface ICart {
+  id: string
+  qty: number
+  shippingDaysCount: number
+  price: number
+  isSelected: boolean
+}

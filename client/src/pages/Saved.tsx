@@ -1,18 +1,20 @@
-import { MdOutlineShoppingBag, MdEdit } from 'react-icons/md'
+import { MdShoppingBag, MdOutlineShoppingBag, MdEdit } from 'react-icons/md'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Center, Environment } from '@react-three/drei'
-import { LuBadgeDollarSign } from 'react-icons/lu'
-import { useSnapshot } from 'valtio'
 import { useEffect, useState } from 'react'
+import { LuBadgeDollarSign } from 'react-icons/lu'
+import { useNavigate } from 'react-router-dom'
+import { useSnapshot } from 'valtio'
 import { IoMdTrash } from 'react-icons/io'
 import { Canvas } from '@react-three/fiber'
+import { toast } from 'react-toastify'
+import { ICart } from '../utils/interface'
 import DeleteProduct from '../components/overlay/DeleteProduct'
 import StaticShirt from '../components/saved/StaticShirt'
 import Navbar from '../components/general/Navbar'
 import state from './../store'
 // @ts-ignore
 import 'swiper/css'
-import { useNavigate } from 'react-router-dom'
 
 const Saved = () => {
   const [selectedId, setSelectedId] = useState('')
@@ -33,6 +35,45 @@ const Saved = () => {
     setOpenDeleteProductOverlay(true)
   }
 
+  const handleAddToCart = async(id: string) => {
+    const minPrice = 50
+    const maxPrice = 100
+    const step = 0.2
+    const randomStep = Math.floor(Math.random() * ((maxPrice - minPrice) / step + 1))
+    const price = parseFloat((minPrice + randomStep * step).toFixed(2))
+
+    const prevCartData = JSON.parse(localStorage.getItem('SL_CART_ITEM')!) || []
+
+    const isShirtInCart = (prevCartData as ICart[]).find(item => item.id === id)
+
+    if (isShirtInCart) {
+      const newData = (prevCartData as ICart[]).filter(item => item.id !== id)
+
+      state.cart = newData
+
+      localStorage.setItem('SL_CART_ITEM', JSON.stringify(newData))
+
+      toast.warning('T-Shirt has been removed from cart')
+    } else {
+      const newData = {
+        id,
+        qty: 1,
+        shippingDaysCount: Math.floor(Math.random() * 5) + 1,
+        price,
+        isSelected: true
+      }
+  
+      state.cart = [
+        ...snap.cart,
+        newData
+      ]
+  
+      localStorage.setItem('SL_CART_ITEM', JSON.stringify([...prevCartData, newData]))
+      
+      toast.success('T-Shirt has been added to cart successfully')
+    }
+  }
+
   useEffect(() => {
     const getSavedData = () => {
       const savedData = JSON.parse(localStorage.getItem('SL_SAVED_T_SHIRT')!)
@@ -40,6 +81,15 @@ const Saved = () => {
     }
 
     getSavedData()
+  }, [])
+
+  useEffect(() => {
+    const getCartData = () => {
+      const cartData = JSON.parse(localStorage.getItem('SL_CART_ITEM')!)
+      state.cart = cartData || []
+    }
+
+    getCartData()
   }, [])
 
   return (
@@ -78,7 +128,11 @@ const Saved = () => {
                     </Canvas>
                     <h1 className='truncate text-center mt-5 font-medium text-gray-600 capitalize'>{item.name}</h1>
                     <div className='flex items-center justify-center glassmorphism rounded-lg w-fit m-auto mt-3 text-2xl gap-5 p-3'>
-                      <MdOutlineShoppingBag className='text-primary cursor-pointer' />
+                      {
+                        snap.cart.find(it => it.id === item.id)
+                        ? <MdShoppingBag onClick={() => handleAddToCart(item.id)} className='text-primary cursor-pointer' />
+                        : <MdOutlineShoppingBag onClick={() => handleAddToCart(item.id)} className='text-primary cursor-pointer' />
+                      }
                       <LuBadgeDollarSign className='text-green-500 cursor-pointer' />
                       <MdEdit onClick={() => handleClickEdit(item.id)} className='text-primary cursor-pointer' />
                       <IoMdTrash onClick={() => handleClickDelete(item.id, item.name)} className='text-red-500 cursor-pointer' />

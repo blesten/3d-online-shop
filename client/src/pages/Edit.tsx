@@ -21,7 +21,7 @@ const Edit = () => {
 
   useEffect(() => {
     const getSavedData = () => {
-      const savedData = JSON.parse(localStorage.getItem('SL_SAVED_T_SHIRT')!)
+      const savedData = JSON.parse(localStorage.getItem('SL_SAVED_T_SHIRT')!) || []
       state.saved = savedData || []
     }
 

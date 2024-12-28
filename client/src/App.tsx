@@ -3,6 +3,7 @@ import { Bounce, ToastContainer } from 'react-toastify'
 import Home from './pages/Home'
 import Saved from './pages/Saved'
 import Edit from './pages/Edit'
+import Cart from './pages/Cart'
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
           <Route path='/' element={<Home />} />
           <Route path='/saved' element={<Saved />} />
           <Route path='/edit/:id' element={<Edit />} />
+          <Route path='/cart' element={<Cart />} />
         </Routes>
       </Router>
 
