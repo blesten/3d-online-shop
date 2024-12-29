@@ -6,6 +6,8 @@ import state from './../../store'
 import { Canvas } from '@react-three/fiber'
 import { Center, Environment } from '@react-three/drei'
 import StaticShirt from '../saved/StaticShirt'
+import { useSnapshot } from 'valtio'
+import { deleteDataAPI, patchDataAPI } from '../../utils/baseAPI'
 
 interface IProps {
   loopIdx: number
@@ -40,10 +42,12 @@ const CartItem = ({
   shirtLogo,
   shirtTexture
 }: IProps) => {
-  const handleChangeQty = (cat: string) => {
-    const prevCartData = JSON.parse(localStorage.getItem('SL_CART_ITEM')!) || []
+  const snap = useSnapshot(state)
 
-    const currentShirt = (prevCartData as ICart[]).find(item => item.id === id)
+  const handleChangeQty = async(cat: string) => {
+    const prevCartData = snap.cart
+
+    const currentShirt = prevCartData.find(item => item.id === id)
 
     if (cat === 'decrease') {
       const newQty = qty - 1
@@ -54,9 +58,13 @@ const CartItem = ({
           qty: newQty
         }
 
-        const newData = (prevCartData as ICart[]).map(item => item.id === id ? newCurrentShirtData : item)
+        const newData = prevCartData.map(item => item.id === id ? newCurrentShirtData : item)
 
-        localStorage.setItem('SL_CART_ITEM', JSON.stringify(newData))
+        if (snap.user.accessToken) {
+          await patchDataAPI(`cart/${id}`, { qty: newQty, isSelected }, snap.user.accessToken)
+        } else {
+          localStorage.setItem('SL_CART_ITEM', JSON.stringify(newData))
+        }
 
         state.cart = newData as ICart[]
       }
@@ -68,37 +76,49 @@ const CartItem = ({
         qty: newQty
       }
 
-      const newData = (prevCartData as ICart[]).map(item => item.id === id ? newCurrentShirtData : item)
+      const newData = prevCartData.map(item => item.id === id ? newCurrentShirtData : item)
 
-      localStorage.setItem('SL_CART_ITEM', JSON.stringify(newData))
+      if (snap.user.accessToken) {
+        await patchDataAPI(`cart/${id}`, { qty: newQty, isSelected }, snap.user.accessToken)
+      } else {
+        localStorage.setItem('SL_CART_ITEM', JSON.stringify(newData))
+      }
 
       state.cart = newData as ICart[]
     }
   }
 
-  const handleChangeSelectedStatus = () => {
-    const prevCartData = JSON.parse(localStorage.getItem('SL_CART_ITEM')!) || []
+  const handleChangeSelectedStatus = async() => {
+    const prevCartData = snap.cart
 
-    const currentShirt = (prevCartData as ICart[]).find(item => item.id === id)
+    const currentShirt = prevCartData.find(item => item.id === id)
 
     const newCurrentShirtData = {
       ...currentShirt,
       isSelected: !isSelected
     }
 
-    const newData = (prevCartData as ICart[]).map(item => item.id === id ? newCurrentShirtData : item)
+    const newData = prevCartData.map(item => item.id === id ? newCurrentShirtData : item)
 
-    localStorage.setItem('SL_CART_ITEM', JSON.stringify(newData))
+    if (snap.user.accessToken) {
+      await patchDataAPI(`cart/${id}`, { qty, isSelected: !isSelected }, snap.user.accessToken)
+    } else {
+      localStorage.setItem('SL_CART_ITEM', JSON.stringify(newData))
+    }
 
     state.cart = newData as ICart[]
   }
 
-  const handleRemoveItem = () => {
-    const prevCartData = JSON.parse(localStorage.getItem('SL_CART_ITEM')!) || []
+  const handleRemoveItem = async() => {
+    const prevCartData = snap.cart
 
-    const newData = (prevCartData as ICart[]).filter(item => item.id !== id)
+    const newData = prevCartData.filter(item => item.id !== id)
 
-    localStorage.setItem('SL_CART_ITEM', JSON.stringify(newData))
+    if (snap.user.accessToken) {
+      await deleteDataAPI(`cart/${id}`, snap.user.accessToken)
+    } else {
+      localStorage.setItem('SL_CART_ITEM', JSON.stringify(newData))
+    }
 
     state.cart = newData as ICart[]
   }

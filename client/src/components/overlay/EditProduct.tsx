@@ -6,6 +6,8 @@ import state from './../../store'
 import { useNavigate } from "react-router-dom"
 import { uploadImages } from "../../utils/cloudinary"
 import { toast } from "react-toastify"
+import { useSnapshot } from "valtio"
+import { patchDataAPI } from "../../utils/baseAPI"
 
 interface IProps {
   openEditProductOverlay: boolean
@@ -42,6 +44,8 @@ const EditProduct = ({
   shirtLogo,
   shirtTexture
 }: IProps) => {
+  const snap = useSnapshot(state)
+
   const [showSizeDetail, setShowSizeDetail] = useState(false)
   const [loading, setLoading] = useState(false)
 
@@ -88,9 +92,13 @@ const EditProduct = ({
         createdAt: new Date()
       }
 
-      state.saved = state.saved.map(item => item.id === id ? newData : item)
+      if (snap.user.accessToken) {
+        await patchDataAPI(`saved/${id}`, newData, snap.user.accessToken)
+      } else {
+        localStorage.setItem('SL_SAVED_T_SHIRT', JSON.stringify(state.saved))
+      }
 
-      localStorage.setItem('SL_SAVED_T_SHIRT', JSON.stringify(state.saved))
+      state.saved = state.saved.map(item => item.id === id ? newData : item)
 
       setOpenEditProductOverlay(false)
       navigate('/saved')

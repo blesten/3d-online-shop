@@ -6,24 +6,57 @@ import Edit from './pages/Edit'
 import Cart from './pages/Cart'
 import { useEffect } from 'react'
 import state from './store'
+import { useSnapshot } from 'valtio'
+import { getDataAPI } from './utils/baseAPI'
 
 const App = () => {
+  const snap = useSnapshot(state)
+
   useEffect(() => {
-    const getSavedData = () => {
-      const savedData = JSON.parse(localStorage.getItem('SL_SAVED_T_SHIRT')!)
-      state.saved = savedData || []
+    const getSavedData = async() => {
+      let savedData
+      
+      if (snap.user.accessToken) {
+        const res = await getDataAPI('saved', snap.user.accessToken)
+        state.saved = res.data.data
+      } else {
+        savedData = JSON.parse(localStorage.getItem('SL_SAVED_T_SHIRT')!)
+        state.saved = savedData || []
+      }
     }
 
     getSavedData()
-  }, [])
+  }, [snap.user])
 
   useEffect(() => {
-    const getCartData = () => {
-      const cartData = JSON.parse(localStorage.getItem('SL_CART_ITEM')!)
-      state.cart = cartData || []
+    const getCartData = async() => {
+      let cartData
+
+      if (snap.user.accessToken) {
+        const res = await getDataAPI('cart', snap.user.accessToken)
+        state.cart = res.data.data
+      } else {
+        cartData = JSON.parse(localStorage.getItem('SL_CART_ITEM')!)
+        state.cart = cartData || []
+      }
     }
 
     getCartData()
+  }, [snap.user])
+
+  useEffect(() => {
+    const getLoginUserData = async() => {
+      const lsAuth = localStorage.getItem('SL_IS_AUTH')
+      if (lsAuth && lsAuth === 'Y') {
+        const res = await getDataAPI('user/refresh_token')
+        state.user = {
+          accessToken: res.data.accessToken,
+          user: res.data.user
+        }
+      }
+    }
+
+    getLoginUserData()
   }, [])
   
   return (

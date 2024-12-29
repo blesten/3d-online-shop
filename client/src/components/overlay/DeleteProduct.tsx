@@ -4,6 +4,8 @@ import { ISaved } from '../../utils/interface'
 import { toast } from 'react-toastify'
 import Button from './../general/Button'
 import state from './../../store'
+import { useSnapshot } from 'valtio'
+import { deleteDataAPI } from '../../utils/baseAPI'
 
 interface IProps {
   openDeleteProductOverlay: boolean
@@ -22,13 +24,24 @@ const DeleteProduct = ({
   shirtName,
   setShirtName
 }: IProps) => {
+  const snap = useSnapshot(state)
+
   const deleteProductOverlayRef = useRef() as React.MutableRefObject<HTMLDivElement>
 
-  const handleDeleteProduct = () => {
-    const prevData = JSON.parse(localStorage.getItem('SL_SAVED_T_SHIRT')!) || []
-    const newData = (prevData as ISaved[]).filter(item => item.id !== id)
-    localStorage.setItem('SL_SAVED_T_SHIRT', JSON.stringify(newData))
-    state.saved = newData
+  const handleDeleteProduct = async() => {
+    if (snap.user.accessToken) {
+      await deleteDataAPI(`saved/${id}`, snap.user.accessToken)
+      await deleteDataAPI(`cart/${id}`, snap.user.accessToken)
+      state.saved = snap.saved.filter(item => item.id !== id)
+      state.cart = snap.cart.filter(item => item.id !== id)
+    } else {
+      const prevData = JSON.parse(localStorage.getItem('SL_SAVED_T_SHIRT')!) || []
+      const newData = (prevData as ISaved[]).filter(item => item.id !== id)
+      localStorage.setItem('SL_SAVED_T_SHIRT', JSON.stringify(newData))
+      state.saved = newData
+      state.cart = snap.cart.filter(item => item.id !== id)
+      localStorage.setItem('SL_CART_ITEM', JSON.stringify(snap.cart.filter(item => item.id !== id)))
+    }
 
     setId('')
     setShirtName('')

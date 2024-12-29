@@ -9,8 +9,8 @@ import { IDecodedToken } from '../utils/interface'
 const userCtrl = {
   register: async(req: Request, res: Response) => {
     try {
-      const { name, email, phoneNumber, password } = req.body
-      if (!name || !email || !phoneNumber || !password) {
+      const { name, email, password } = req.body
+      if (!name || !email || !password) {
         res.status(400).json({ msg: 'Please provide required field for registration purpose' })
         return
       }
@@ -36,7 +36,6 @@ const userCtrl = {
       const newUser = new User({
         name,
         email,
-        phoneNumber,
         password: passwordHash
       })
       await newUser.save()
@@ -82,7 +81,7 @@ const userCtrl = {
         path: '/api/v1/user/refresh_token',
         maxAge: 30 * 24 * 60 * 60 * 1000
       })
-      
+
       res.status(200).json({
         msg: `Authenticated as ${user.name}`,
         accessToken,

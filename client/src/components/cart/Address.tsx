@@ -1,6 +1,6 @@
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa6'
 import Button from './../general/Button'
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import { ChangeEvent, FormEvent, useState } from 'react'
 
 interface IProps {
   setCurrentComp: React.Dispatch<React.SetStateAction<string>>
@@ -49,26 +49,6 @@ const Address = ({ setCurrentComp }: IProps) => {
 
     setCurrentComp('end')
   }
-
-  useEffect(() => {
-    const getLsAddressData = () => {
-      const lsData = JSON.parse(localStorage.getItem('SL_ADDRESS')!) || {
-        country: '',
-        province: '',
-        city: '',
-        district: '',
-        postalCode: '',
-        name: '',
-        email: '',
-        phoneNumber: '',
-        address: ''
-      }
-
-      setAddressData(lsData)
-    }
-
-    getLsAddressData()
-  }, [])
 
   return (
     <div className='px-20 mt-12 mb-16 mx-auto w-1/2'>

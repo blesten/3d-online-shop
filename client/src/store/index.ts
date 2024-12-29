@@ -1,9 +1,16 @@
-import { ISaved, ICart } from './../utils/interface'
+import { ISaved, ICart, IUserState } from './../utils/interface'
 import { proxy } from 'valtio'
 
-const state = proxy<{saved: ISaved[], cart: ICart[]}>({
+const state = proxy<
+  {
+    saved: ISaved[],
+    cart: ICart[],
+    user: Partial<IUserState>
+  }
+>({
   saved: [],
-  cart: []
+  cart: [],
+  user: {}
 })
 
 export default state

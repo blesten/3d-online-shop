@@ -17,3 +17,15 @@ export interface ICart {
   price: number
   isSelected: boolean
 }
+
+export interface IUser {
+  name: string
+  avatar: string
+  email: string
+  password: string
+}
+
+export interface IUserState {
+  accessToken: string
+  user: IUser
+}

@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react"
 import { useSnapshot } from "valtio"
-import { ICart } from "../../utils/interface"
 import state from './../../store'
 import CartItem from "./CartItem"
 import { GiBowTieRibbon } from "react-icons/gi"
 import Button from "../general/Button"
 import { FaArrowRight } from "react-icons/fa6"
+import { deleteDataAPI, patchDataAPI } from "../../utils/baseAPI"
 
 interface IProps {
   setCurrentComp: React.Dispatch<React.SetStateAction<string>>
@@ -22,26 +22,44 @@ const FrontCart = ({ setCurrentComp }: IProps) => {
       setCurrentComp('middle')
   }
 
-  const handleRemoveCheckedItem = () => {
-    const prevCartData: ICart[] = JSON.parse(localStorage.getItem('SL_CART_ITEM')!) || []
-    const newData = (prevCartData as ICart[]).filter(item => !item.isSelected)
+  const handleRemoveCheckedItem = async() => {
+    const prevCartData = snap.cart
+    const newData = prevCartData.filter(item => !item.isSelected)
+    const deletedData = prevCartData.filter(item => item.isSelected)
     state.cart = newData
-    localStorage.setItem('SL_CART_ITEM', JSON.stringify(newData))
+
+    if (snap.user.accessToken) {
+      for (let i = 0; i < deletedData.length; i++) {
+        await deleteDataAPI(`cart/${deletedData[i].id}`, snap.user.accessToken)
+      }
+    } else {
+      localStorage.setItem('SL_CART_ITEM', JSON.stringify(newData))
+    }
   }
 
-  const handleAllCheckbox = () => {
+  const handleAllCheckbox = async() => {
     const isChecked = snap.cart.every(item => item.isSelected)
 
     if (isChecked) {
-      const prevCartData: ICart[] = JSON.parse(localStorage.getItem('SL_CART_ITEM')!) || []
-      const newData = (prevCartData as ICart[]).map(item => ({ ...item, isSelected: false }))
+      const prevCartData = snap.cart
+      const newData = prevCartData.map(item => ({ ...item, isSelected: false }))
       state.cart = newData
-      localStorage.setItem('SL_CART_ITEM', JSON.stringify(newData))
+
+      if (snap.user.accessToken) {
+        await patchDataAPI('cart/all', { isSelected: false }, snap.user.accessToken)
+      } else {
+        localStorage.setItem('SL_CART_ITEM', JSON.stringify(newData))
+      }
     } else {
-      const prevCartData: ICart[] = JSON.parse(localStorage.getItem('SL_CART_ITEM')!) || []
-      const newData = (prevCartData as ICart[]).map(item => ({ ...item, isSelected: true }))
+      const prevCartData = snap.cart
+      const newData = prevCartData.map(item => ({ ...item, isSelected: true }))
       state.cart = newData
-      localStorage.setItem('SL_CART_ITEM', JSON.stringify(newData))
+
+      if (snap.user.accessToken) {
+        await patchDataAPI('cart/all', { isSelected: true }, snap.user.accessToken)
+      } else {
+        localStorage.setItem('SL_CART_ITEM', JSON.stringify(newData))
+      }
     }
   }
 

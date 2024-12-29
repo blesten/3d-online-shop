@@ -8,6 +8,9 @@ router.route('/')
   .get(isAuthenticated, cartCtrl.read)
   .post(isAuthenticated, cartCtrl.create)
 
+router.route('/all')
+  .patch(isAuthenticated, cartCtrl.updateAllStatus)
+
 router.route('/:id')
   .patch(isAuthenticated, cartCtrl.update)
   .delete(isAuthenticated, cartCtrl.delete)

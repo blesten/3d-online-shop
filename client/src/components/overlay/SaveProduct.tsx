@@ -7,6 +7,7 @@ import { useSnapshot } from 'valtio'
 import { toast } from 'react-toastify'
 import Loader from '../general/Loader'
 import state from './../../store'
+import { postDataAPI } from '../../utils/baseAPI'
 
 interface IProps {
   openSaveProductOverlay: boolean
@@ -82,8 +83,6 @@ const SaveProduct = ({
         }
       }
 
-      const prevSavedData = JSON.parse(localStorage.getItem('SL_SAVED_T_SHIRT')!) || []
-
       const newData = {
         id: uuidv4(),
         name,
@@ -101,7 +100,16 @@ const SaveProduct = ({
         newData
       ]
 
-      localStorage.setItem('SL_SAVED_T_SHIRT', JSON.stringify([...prevSavedData, newData]))
+      if (snap.user.accessToken) {
+        try {
+          await postDataAPI('saved', newData, snap.user.accessToken)
+        } catch (err: any) {
+          toast.error(err.response.data.msg)
+        }
+      } else {
+        const prevSavedData = JSON.parse(localStorage.getItem('SL_SAVED_T_SHIRT')!) || []
+        localStorage.setItem('SL_SAVED_T_SHIRT', JSON.stringify([...prevSavedData, newData]))
+      }
 
       setOpenSaveProductOverlay(false)
       setName('')

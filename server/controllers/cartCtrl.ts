@@ -46,7 +46,7 @@ const cartCtrl = {
         return
       }
 
-      const cartData = await Cart.findById(id)
+      const cartData = await Cart.findOne({ id })
       if (!cartData) {
         res.status(404).json({ msg: 'Cart not found' })
         return
@@ -68,9 +68,22 @@ const cartCtrl = {
     try {
       const { id } = req.params
 
-      await Cart.findByIdAndDelete(id)
+      await Cart.findOneAndDelete({ id })
 
       res.status(200).json({ msg: 'T-Shirt has been removed from cart successfully' })
+    } catch (err: any) {
+      res.status(500).json({ msg: err.message })
+    }
+  },
+  updateAllStatus: async(req: IReqUser, res: Response) => {
+    try {
+      const { isSelected } = req.body
+
+      await Cart.updateMany({ userId: req.user?._id }, {
+        isSelected
+      })
+
+      res.status(200).json({ msg: 'Update success' })
     } catch (err: any) {
       res.status(500).json({ msg: err.message })
     }

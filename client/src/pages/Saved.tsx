@@ -1,20 +1,20 @@
 import { MdShoppingBag, MdOutlineShoppingBag, MdEdit } from 'react-icons/md'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Center, Environment } from '@react-three/drei'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { LuBadgeDollarSign } from 'react-icons/lu'
 import { useNavigate } from 'react-router-dom'
 import { useSnapshot } from 'valtio'
 import { IoMdTrash } from 'react-icons/io'
 import { Canvas } from '@react-three/fiber'
 import { toast } from 'react-toastify'
-import { ICart } from '../utils/interface'
 import DeleteProduct from '../components/overlay/DeleteProduct'
 import StaticShirt from '../components/saved/StaticShirt'
 import Navbar from '../components/general/Navbar'
 import state from './../store'
 // @ts-ignore
 import 'swiper/css'
+import { deleteDataAPI, getDataAPI, postDataAPI } from '../utils/baseAPI'
 
 const Saved = () => {
   const [selectedId, setSelectedId] = useState('')
@@ -42,16 +42,22 @@ const Saved = () => {
     const randomStep = Math.floor(Math.random() * ((maxPrice - minPrice) / step + 1))
     const price = parseFloat((minPrice + randomStep * step).toFixed(2))
 
-    const prevCartData = JSON.parse(localStorage.getItem('SL_CART_ITEM')!) || []
+    const prevCartData = snap.cart
 
-    const isShirtInCart = (prevCartData as ICart[]).find(item => item.id === id)
+    const isShirtInCart = prevCartData.find(item => item.id === id)
 
     if (isShirtInCart) {
-      const newData = (prevCartData as ICart[]).filter(item => item.id !== id)
+      if (snap.user.accessToken) {
+        await deleteDataAPI(`cart/${id}`, snap.user.accessToken)
 
-      state.cart = newData
+        state.cart = snap.cart.filter(item => item.id !== id)
+      } else {
+        const newData = prevCartData.filter(item => item.id !== id)
 
-      localStorage.setItem('SL_CART_ITEM', JSON.stringify(newData))
+        state.cart = newData
+
+        localStorage.setItem('SL_CART_ITEM', JSON.stringify(newData))
+      }
 
       toast.warning('T-Shirt has been removed from cart')
     } else {
@@ -67,12 +73,32 @@ const Saved = () => {
         ...snap.cart,
         newData
       ]
-  
-      localStorage.setItem('SL_CART_ITEM', JSON.stringify([...prevCartData, newData]))
+
+      if (snap.user.accessToken) {
+        await postDataAPI('cart', newData, snap.user.accessToken)
+      } else {
+        localStorage.setItem('SL_CART_ITEM', JSON.stringify([...prevCartData, newData]))
+      }
       
       toast.success('T-Shirt has been added to cart successfully')
     }
   }
+
+  useEffect(() => {
+    const getSavedData = async() => {
+      let savedData
+      
+      if (snap.user.accessToken) {
+        const res = await getDataAPI('saved', snap.user.accessToken)
+        state.saved = res.data.data
+      } else {
+        savedData = JSON.parse(localStorage.getItem('SL_SAVED_T_SHIRT')!)
+        state.saved = savedData || []
+      }
+    }
+
+    getSavedData()
+  }, [snap.user])
 
   return (
     <>
