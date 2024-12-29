@@ -1,6 +1,6 @@
 import { MdShoppingBag , MdOutlineShoppingBag } from 'react-icons/md'
 import { IoBookmark, IoBookmarkOutline } from 'react-icons/io5'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import state from './../../store'
 import Button from './Button'
 import { useSnapshot } from 'valtio'
@@ -14,6 +14,8 @@ const Navbar = () => {
   const [selectedAuthScreen, setSelectedAuthScreen] = useState('signIn')
 
   const { pathname } = useLocation()
+  
+  const navigate = useNavigate()
 
   const snap = useSnapshot(state)
 
@@ -24,6 +26,7 @@ const Navbar = () => {
 
   const handleLogout = async() => {
     const res = await getDataAPI('user/logout')
+    navigate('/')
     localStorage.setItem('SL_IS_AUTH', 'N')
     state.user = {}
     toast.success(res.data.msg)

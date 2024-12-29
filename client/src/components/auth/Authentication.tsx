@@ -7,9 +7,10 @@ interface IProps {
   setOpenAuthenticationOverlay: React.Dispatch<React.SetStateAction<boolean>>
   selectedAuthScreen: string
   setSelectedAuthScreen: React.Dispatch<React.SetStateAction<string>>
+  isProgressToAddress?: boolean
 }
 
-const Authentication = ({ openAuthenticationOverlay, setOpenAuthenticationOverlay, selectedAuthScreen, setSelectedAuthScreen }: IProps) => {
+const Authentication = ({ openAuthenticationOverlay, setOpenAuthenticationOverlay, selectedAuthScreen, setSelectedAuthScreen, isProgressToAddress }: IProps) => {
   const authenticationOverlayRef = useRef() as React.MutableRefObject<HTMLDivElement>
 
   useEffect(() => {
@@ -31,6 +32,7 @@ const Authentication = ({ openAuthenticationOverlay, setOpenAuthenticationOverla
           <SignIn
             setSelectedAuthScreen={setSelectedAuthScreen}
             setOpenAuthenticationOverlay={setOpenAuthenticationOverlay}
+            isProgressToAddress={isProgressToAddress}
           />
         }
 

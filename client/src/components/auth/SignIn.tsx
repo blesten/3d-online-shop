@@ -10,9 +10,10 @@ import { ICart, ISaved } from '../../utils/interface'
 interface IProps {
   setSelectedAuthScreen: React.Dispatch<React.SetStateAction<string>>
   setOpenAuthenticationOverlay: React.Dispatch<React.SetStateAction<boolean>>
+  isProgressToAddress?: boolean
 }
 
-const SignIn = ({ setSelectedAuthScreen, setOpenAuthenticationOverlay }: IProps) => {
+const SignIn = ({ setSelectedAuthScreen, setOpenAuthenticationOverlay, isProgressToAddress }: IProps) => {
   const [signInData, setSignInData] = useState({
     email: '',
     password: ''
@@ -88,6 +89,10 @@ const SignIn = ({ setSelectedAuthScreen, setOpenAuthenticationOverlay }: IProps)
         toast.success(userRes.data.msg)
         setSignInData({ email: '', password: '' })
         setOpenAuthenticationOverlay(false)
+
+        if (isProgressToAddress) {
+          window.location.href = '/cart'
+        }
       } catch (err: any) {
         toast.error(err.response.data.msg)
       } finally {

@@ -3,6 +3,7 @@ import Header from '../components/cart/Header'
 import Navbar from './../components/general/Navbar'
 import FrontCart from '../components/cart/FrontCart'
 import Address from '../components/cart/Address'
+import Footer from '../components/general/Footer'
 
 const Cart = () => { 
   const [currentComp, setCurrentComp] = useState('front')
@@ -20,6 +21,7 @@ const Cart = () => {
         currentComp === 'middle' &&
         <Address setCurrentComp={setCurrentComp} />
       }
+      <Footer />
     </>
   )
 }

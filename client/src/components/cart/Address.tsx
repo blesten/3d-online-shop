@@ -1,12 +1,18 @@
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa6'
 import Button from './../general/Button'
-import { ChangeEvent, FormEvent, useState } from 'react'
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
+import { getDataAPI, postDataAPI } from '../../utils/baseAPI'
+import { useSnapshot } from 'valtio'
+import state from './../../store'
 
 interface IProps {
   setCurrentComp: React.Dispatch<React.SetStateAction<string>>
 }
 
 const Address = ({ setCurrentComp }: IProps) => {
+  const snap = useSnapshot(state)
+  
   const [addressData, setAddressData] = useState({
     country: '',
     province: '',
@@ -40,15 +46,37 @@ const Address = ({ setCurrentComp }: IProps) => {
       setAddressData({ ...addressData, [name]: value })
   }
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async(e: FormEvent) => {
     e.preventDefault()
     
     if (addressData.country && addressData.province && addressData.city && addressData.district && addressData.postalCode && addressData.name && addressData.email && addressData.phoneNumber && addressData.address) {
-      localStorage.setItem('SL_ADDRESS', JSON.stringify(addressData))
+      try {
+        await postDataAPI('shippingAddress', { ...addressData, recipientName: addressData.name, recipientEmail: addressData.email, recipientPhoneNumber: addressData.phoneNumber }, snap.user.accessToken)
+        setCurrentComp('end')
+      } catch (err: any) {
+        toast.error(err.response.data.msg)
+      }
+    }
+  }
+
+  useEffect(() => {
+    const getAddressData = async() => {
+      const res = await getDataAPI('shippingAddress', snap.user.accessToken)
+      setAddressData({
+        country: res.data.data.country,
+        province: res.data.data.province,
+        city: res.data.data.city,
+        district: res.data.data.district,
+        postalCode: res.data.data.postalCode,
+        name: res.data.data.recipientName,
+        email: res.data.data.recipientEmail,
+        phoneNumber: res.data.data.recipientPhoneNumber,
+        address: res.data.data.address
+      })
     }
 
-    setCurrentComp('end')
-  }
+    getAddressData()
+  }, [])
 
   return (
     <div className='px-20 mt-12 mb-16 mx-auto w-1/2'>
