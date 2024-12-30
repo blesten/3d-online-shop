@@ -27,6 +27,30 @@ const checkoutSchema = new mongoose.Schema<ICheckout>({
       price: {
         type: Number,
         required: true
+      },
+      size: {
+        type: String,
+        required: true
+      },
+      shirtColor: {
+        type: String,
+        required: true
+      },
+      shirtLogo: {
+        type: String,
+        required: true
+      },
+      shirtTexture: {
+        type: String,
+        required: true
+      },
+      isLogoTexture: {
+        type: Boolean,
+        required: true
+      },
+      isShirtTexture: {
+        type: Boolean,
+        required: true
       }
     }
   ],

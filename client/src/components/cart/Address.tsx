@@ -72,7 +72,13 @@ const Address = ({ setCurrentComp }: IProps) => {
             qty: cartData[i].qty,
             shippingDaysCount: cartData[i].shippingDaysCount,
             price: cartData[i].price,
-            name: shirtData?.name
+            name: shirtData?.name,
+            size: shirtData?.size,
+            shirtColor: shirtData?.shirtColor,
+            shirtLogo: shirtData?.shirtLogo,
+            shirtTexture: shirtData?.shirtTexture,
+            isLogoTexture: shirtData?.isLogoTexture,
+            isShirtTexture: shirtData?.isShirtTexture
           })
         }
 

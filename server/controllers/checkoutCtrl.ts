@@ -34,7 +34,7 @@ const checkoutCtrl = {
           currency: 'usd',
           product_data: {
             name: product.name,
-            images: ['https://placehold.co/600x400']
+            // images: ['https://placehold.co/600x400']
           },
           unit_amount: Math.round(product.price * 100)
         },
@@ -75,7 +75,10 @@ const checkoutCtrl = {
 
       if (session.payment_status === 'paid' && lastCheckout) {
         lastCheckout.status = 'Payment Success'
-        await lastCheckout?.save()
+        await lastCheckout.save()
+      } else if (session.payment_status === 'unpaid' && lastCheckout) {
+        lastCheckout.status = 'Payment Failed'
+        await lastCheckout.save()
       }
 
       if (lastCheckout) {

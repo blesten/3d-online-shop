@@ -52,4 +52,10 @@ export interface ICheckoutProduct {
   name: string
   shippingDaysCount: number
   price: number
+  size: string
+  shirtColor: string
+  shirtLogo: string
+  shirtTexture: string
+  isLogoTexture: boolean
+  isShirtTexture: boolean
 }

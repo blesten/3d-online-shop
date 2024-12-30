@@ -1,9 +1,24 @@
 import { IoCloseCircleOutline } from "react-icons/io5"
 import { useNavigate } from "react-router-dom"
 import Button from "../components/general/Button"
+import { useSnapshot } from 'valtio'
+import state from './../store'
+import { useEffect } from "react"
+import { patchDataAPI } from "../utils/baseAPI"
 
 const PaymentCancel = () => {
+  const snap = useSnapshot(state)
+
   const navigate = useNavigate()
+
+  useEffect(() => {
+    const updatePaymentStatus = async() => {
+      await patchDataAPI('checkout', {}, snap.user.accessToken)
+    }
+
+    if (snap.user.accessToken)
+      updatePaymentStatus()
+  }, [snap.user])
 
   return (
     <div className='w-screen h-screen overflow-hidden px-14 py-8 flex flex-col justify-center'>
@@ -13,8 +28,8 @@ const PaymentCancel = () => {
       </div>
       <div className='flex items-center justify-center flex-col'>
         <IoCloseCircleOutline className='text-red-500 text-[10rem] mb-8' />
-        <h1 className='text-primary text-2xl font-medium'>Payment Success</h1>
-        <p className='text-xs text-neutral-700 mt-4'>Thank you for your payment. Your product will be delivered soon.</p>
+        <h1 className='text-primary text-2xl font-medium'>Payment Failed</h1>
+        <p className='text-xs text-neutral-700 mt-4'>It seems like the payment process is being interrupted. Please try again to checkout.</p>
         <Button
           text='Home'
           customStyles='bg-primary hover:bg-primary-hover text-white py-3 text-sm font-medium px-7 transition duration-200 mt-7'

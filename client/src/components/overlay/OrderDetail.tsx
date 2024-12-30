@@ -1,6 +1,9 @@
 import { useEffect, useRef } from "react"
 import { AiOutlineClose } from "react-icons/ai"
 import { ICheckout } from "../../utils/interface"
+import { Canvas } from "@react-three/fiber"
+import { Center, Environment } from "@react-three/drei"
+import StaticShirt from "../saved/StaticShirt"
 
 interface IProps {
   openOrderDetailOverlay: boolean
@@ -38,7 +41,19 @@ const OrderDetail = ({ openOrderDetailOverlay, setOpenOrderDetailOverlay, select
                   <div className='flex items-center justify-between'>
                     <div className='flex items-center gap-4'>
                       <div className='w-20 h-20 bg-neutral-200 rounded-md'>
-
+                        <Canvas camera={{ fov: 9 }}>
+                          <ambientLight intensity={.5} />
+                          <Environment preset='city' />
+                          <Center>
+                            <StaticShirt   
+                              isLogoTexture={item.isLogoTexture}
+                              isShirtTexture={item.isShirtTexture}
+                              shirtColor={item.shirtColor}
+                              shirtLogo={item.shirtLogo === 'default' ? '/images/default_texture.png' : item.shirtLogo}
+                              shirtTexture={item.shirtTexture === 'default' ? '/images/default_texture.png' : item.shirtTexture}
+                            />
+                          </Center>
+                        </Canvas>
                       </div>
                       <div>
                         <h1 className='text-sm font-medium'>{item.name}</h1>

@@ -58,7 +58,7 @@ const OrderHistory = () => {
                     <td>{item._id}</td>
                     <td>{item.products.reduce((acc, it) => it.qty + acc, 0)}</td>
                     <td>${(item.products.reduce((acc, it) => (it.qty * it.price) + acc, 0)).toFixed(2)}</td>
-                    <td>{item.status === 'Payment Success' ? 'Paid' : item.status}</td>
+                    <td>{item.status === 'Payment Success' ? 'Paid' : item.status === 'Payment Failed' ? 'Unpaid' : item.status}</td>
                     <td>{formatDate(item.createdAt)}</td>
                     <td>
                       <FaEye onClick={() => handleClickOrderDetail(item)} className='m-auto text-blue-500 cursor-pointer' />
