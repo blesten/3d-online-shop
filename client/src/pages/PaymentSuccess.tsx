@@ -14,6 +14,7 @@ const PaymentSuccess = () => {
   useEffect(() => {
     const updatePaymentStatus = async() => {
       await patchDataAPI('checkout', {}, snap.user.accessToken)
+      state.cart = []
     }
 
     if (snap.user.accessToken)
