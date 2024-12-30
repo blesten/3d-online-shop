@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken'
 import { validEmail, validPassword } from '../utils/validator'
 import User from '../models/User'
 import { generateToken } from '../utils/generateToken'
-import { IDecodedToken } from '../utils/interface'
+import { IDecodedToken, IReqUser } from '../utils/interface'
 
 const userCtrl = {
   register: async(req: Request, res: Response) => {
@@ -142,6 +142,31 @@ const userCtrl = {
           password: ''
         }
       })
+    } catch (err: any) {
+      res.status(500).json({ msg: err.message })
+    }
+  },
+  changePassword: async(req: IReqUser, res: Response) => {
+    try {
+      const { oldPassword, newPassword } = req.body
+
+      const user = await User.findById(req.user?._id)
+      if (!user) {
+        res.status(400).json({ msg: 'An error occured when trying to retrieve user data' })
+        return
+      }
+
+      const isOldPwMatch = await bcrypt.compare(oldPassword, user.password)
+      if (!isOldPwMatch) {
+        res.status(400).json({ msg: 'Current password is incorrect' })
+        return
+      }
+
+      const newPw = await bcrypt.hash(newPassword, 12)
+      user.password = newPw
+      await user.save()
+
+      res.status(200).json({ msg: 'Password has been changed successfully' })
     } catch (err: any) {
       res.status(500).json({ msg: err.message })
     }

@@ -57,6 +57,15 @@ const checkoutCtrl = {
       res.status(500).json({ msg: err.message })
     }
   },
+  read: async(req: IReqUser, res: Response) => {
+    try {
+      const checkout = await Checkout.find({ userId: req.user?._id }).sort('-createdAt')
+
+      res.status(200).json({ checkout })
+    } catch (err: any) {
+      res.status(500).json({ msg: err.message })
+    }
+  },
   updateStatus: async(req: IReqUser, res: Response) => {
     try {
       const lastCheckout = await Checkout.findOne({ userId: req.user?._id }).sort({ createdAt: -1 })

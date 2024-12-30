@@ -10,6 +10,7 @@ import { useSnapshot } from 'valtio'
 import { getDataAPI } from './utils/baseAPI'
 import PaymentSuccess from './pages/PaymentSuccess'
 import PaymentCancel from './pages/PaymentCancel'
+import OrderHistory from './pages/OrderHistory'
 
 const App = () => {
   const snap = useSnapshot(state)
@@ -71,6 +72,7 @@ const App = () => {
           <Route path='/cart' element={<Cart />} />
           <Route path='/payment_success' element={<PaymentSuccess />} />
           <Route path='/payment_cancel' element={<PaymentCancel />} />
+          <Route path='/order_history' element={<OrderHistory />} />
         </Routes>
       </Router>
 

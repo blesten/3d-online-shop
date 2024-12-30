@@ -1,7 +1,6 @@
-import { MdShoppingBag , MdOutlineShoppingBag, MdEdit, MdLogout } from 'react-icons/md'
+import { MdShoppingBag , MdOutlineShoppingBag, MdLogout } from 'react-icons/md'
 import { IoBookmark, IoBookmarkOutline, IoShirt } from 'react-icons/io5'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { TiUser } from 'react-icons/ti'
 import state from './../../store'
 import Button from './Button'
 import { useSnapshot } from 'valtio'
@@ -9,11 +8,14 @@ import Authentication from '../auth/Authentication'
 import { useEffect, useRef, useState } from 'react'
 import { getDataAPI } from '../../utils/baseAPI'
 import { toast } from 'react-toastify'
+import { BsKeyFill } from 'react-icons/bs'
+import ChangePassword from '../overlay/ChangePassword'
 
 const Navbar = () => {
   const [openAuthenticationOverlay, setOpenAuthenticationOverlay] = useState(false)
   const [selectedAuthScreen, setSelectedAuthScreen] = useState('signIn')
   const [openProfileDropdown, setOpenProfileDropdown] = useState(false)
+  const [openChangePasswordOverlay, setOpenChangePasswordOverlay] = useState(false)
 
   const { pathname } = useLocation()
   
@@ -101,19 +103,19 @@ const Navbar = () => {
             snap.user.accessToken
             ? (
               <div ref={profileDropdownRef} className='relative'>
-                <div onClick={() => setOpenProfileDropdown(!openProfileDropdown)} className='w-10 h-10 rounded-full bg-neutral-200 flex items-center justify-center cursor-pointer'>
+                <div onClick={() => setOpenProfileDropdown(!openProfileDropdown)} className='w-9 h-9 rounded-full bg-primary flex items-center justify-center cursor-pointer'>
                   {
                     snap.user.user?.avatar
                     ? ''
-                    : <TiUser className='text-primary text-2xl' />
+                    : <p className='text-white font-medium'>{snap.user.user?.name[0]}</p>
                   }
                 </div>
                 <div className={`absolute top-full mt-2 right-0 w-[200px] bg-white rounded-md border border-neutral-100 z-40 transition duration-100 origin-top ${openProfileDropdown ? 'scale-y-100 pointer-events-auto' : 'scale-y-0 pointer-events-none'}`}>
-                  <Link to='/' className='flex items-center gap-3 py-3 px-5 text-sm transition'>
-                    <MdEdit />
-                    <p>Edit Profile</p>
-                  </Link>
-                  <Link to='/' className='flex items-center gap-3 py-3 px-5 text-sm transition'>
+                  <div onClick={() => setOpenChangePasswordOverlay(true)} className='flex items-center gap-3 py-3 cursor-pointer px-5 text-sm transition'>
+                    <BsKeyFill />
+                    <p>Change Password</p>
+                  </div>
+                  <Link to='/order_history' className='flex items-center gap-3 py-3 px-5 text-sm transition'>
                     <IoShirt />
                     <p>Order History</p>
                   </Link>
@@ -141,6 +143,11 @@ const Navbar = () => {
         setOpenAuthenticationOverlay={setOpenAuthenticationOverlay}
         selectedAuthScreen={selectedAuthScreen}
         setSelectedAuthScreen={setSelectedAuthScreen}
+      />
+      
+      <ChangePassword
+        openChangePasswordOverlay={openChangePasswordOverlay}
+        setOpenChangePasswordOverlay={setOpenChangePasswordOverlay}
       />
     </>
   )
