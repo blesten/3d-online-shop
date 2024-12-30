@@ -1,23 +1,27 @@
-import { MdShoppingBag , MdOutlineShoppingBag } from 'react-icons/md'
-import { IoBookmark, IoBookmarkOutline } from 'react-icons/io5'
+import { MdShoppingBag , MdOutlineShoppingBag, MdEdit, MdLogout } from 'react-icons/md'
+import { IoBookmark, IoBookmarkOutline, IoShirt } from 'react-icons/io5'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { TiUser } from 'react-icons/ti'
 import state from './../../store'
 import Button from './Button'
 import { useSnapshot } from 'valtio'
 import Authentication from '../auth/Authentication'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { getDataAPI } from '../../utils/baseAPI'
 import { toast } from 'react-toastify'
 
 const Navbar = () => {
   const [openAuthenticationOverlay, setOpenAuthenticationOverlay] = useState(false)
   const [selectedAuthScreen, setSelectedAuthScreen] = useState('signIn')
+  const [openProfileDropdown, setOpenProfileDropdown] = useState(false)
 
   const { pathname } = useLocation()
   
   const navigate = useNavigate()
 
   const snap = useSnapshot(state)
+
+  const profileDropdownRef = useRef() as React.MutableRefObject<HTMLDivElement>
 
   const handleClickSignInBtn = () => {
     setSelectedAuthScreen('signIn')
@@ -47,6 +51,17 @@ const Navbar = () => {
 
     getSavedData()
   }, [snap.user])
+
+  useEffect(() => {
+    const checkIfClickedOutside = (e: MouseEvent) => {
+      if (openProfileDropdown && profileDropdownRef.current && !profileDropdownRef.current.contains(e.target as Node)) {
+        setOpenProfileDropdown(false)
+      }
+    }
+
+    document.addEventListener('mousedown', checkIfClickedOutside)
+    return () => document.removeEventListener('mousedown', checkIfClickedOutside)
+  }, [openProfileDropdown])
 
   return (
     <>
@@ -84,7 +99,32 @@ const Navbar = () => {
           </Link>
           {
             snap.user.accessToken
-            ? <h1 onClick={handleLogout}>{snap.user.user?.name}</h1>
+            ? (
+              <div ref={profileDropdownRef} className='relative'>
+                <div onClick={() => setOpenProfileDropdown(!openProfileDropdown)} className='w-10 h-10 rounded-full bg-neutral-200 flex items-center justify-center cursor-pointer'>
+                  {
+                    snap.user.user?.avatar
+                    ? ''
+                    : <TiUser className='text-primary text-2xl' />
+                  }
+                </div>
+                <div className={`absolute top-full mt-2 right-0 w-[200px] bg-white rounded-md border border-neutral-100 z-40 transition duration-100 origin-top ${openProfileDropdown ? 'scale-y-100 pointer-events-auto' : 'scale-y-0 pointer-events-none'}`}>
+                  <Link to='/' className='flex items-center gap-3 py-3 px-5 text-sm transition'>
+                    <MdEdit />
+                    <p>Edit Profile</p>
+                  </Link>
+                  <Link to='/' className='flex items-center gap-3 py-3 px-5 text-sm transition'>
+                    <IoShirt />
+                    <p>Order History</p>
+                  </Link>
+                  <hr />
+                  <div onClick={handleLogout} className='flex items-center gap-3 py-3 px-5 text-sm transition cursor-pointer'>
+                    <MdLogout />
+                    <p>Logout</p>
+                  </div>
+                </div>
+              </div>
+            )
             : (
               <Button
                 text='Sign In'

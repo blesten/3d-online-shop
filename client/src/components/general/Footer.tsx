@@ -3,7 +3,7 @@ import { MdEmail, MdLocationOn, MdPhone } from "react-icons/md"
 
 const Footer = () => {
   return (
-    <div className='flex gap-12 px-20 mb-10 mt-24 border-t border-neutral-200 pt-10'>
+    <div className='flex gap-12 px-20 pb-10 mt-24 pt-10 bg-neutral-50 '>
       <div className='flex-[3]'>
         <div className='flex items-center gap-3'>
           <img src='/images/logo.svg' alt='Stitch Lab' className='w-10' />
@@ -42,24 +42,24 @@ const Footer = () => {
         </div>
       </div>
       <div className='flex-1 text-xs flex flex-col gap-4 text-neutral-700 font-medum'>
-        <p className='cursor-pointer'>Product</p>
-        <p className='cursor-pointer'>Admissions</p>
-        <p className='cursor-pointer'>Charting</p>
-        <p className='cursor-pointer'>Billing</p>
-        <p className='cursor-pointer'>Outcomes</p>
+        <p className='cursor-pointer w-fit'>Product</p>
+        <p className='cursor-pointer w-fit'>Admissions</p>
+        <p className='cursor-pointer w-fit'>Charting</p>
+        <p className='cursor-pointer w-fit'>Billing</p>
+        <p className='cursor-pointer w-fit'>Outcomes</p>
       </div>
       <div className='flex-1 text-xs flex flex-col gap-4 text-neutral-700 font-medum'>
-        <p className='cursor-pointer'>Company</p>
-        <p className='cursor-pointer'>Features</p>
-        <p className='cursor-pointer'>Why Stitch Lab</p>
-        <p className='cursor-pointer'>Blog</p>
-        <p className='cursor-pointer'>testimonials</p>
+        <p className='cursor-pointer w-fit'>Company</p>
+        <p className='cursor-pointer w-fit'>Features</p>
+        <p className='cursor-pointer w-fit'>Why Stitch Lab</p>
+        <p className='cursor-pointer w-fit'>Blog</p>
+        <p className='cursor-pointer w-fit'>testimonials</p>
       </div>
       <div className='flex-1 text-xs flex flex-col gap-4 text-neutral-700 font-medum'>
-        <p className='cursor-pointer'>Support</p>
-        <p className='cursor-pointer'>Contact Us</p>
-        <p className='cursor-pointer'>Privacy Policy</p>
-        <p className='cursor-pointer'>Terms of Service</p>
+        <p className='cursor-pointer w-fit'>Support</p>
+        <p className='cursor-pointer w-fit'>Contact Us</p>
+        <p className='cursor-pointer w-fit'>Privacy Policy</p>
+        <p className='cursor-pointer w-fit'>Terms of Service</p>
       </div>
     </div>
   )

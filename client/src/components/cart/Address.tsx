@@ -1,16 +1,20 @@
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa6'
-import Button from './../general/Button'
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { getDataAPI, postDataAPI } from '../../utils/baseAPI'
 import { useSnapshot } from 'valtio'
 import state from './../../store'
+import { loadStripe } from '@stripe/stripe-js'
+import { STRIPE_PUBLISHABLE_KEY } from '../../config/key'
+import Loader from '../general/Loader'
 
 interface IProps {
   setCurrentComp: React.Dispatch<React.SetStateAction<string>>
 }
 
 const Address = ({ setCurrentComp }: IProps) => {
+  const [loading, setLoading] = useState(false)
+
   const snap = useSnapshot(state)
   
   const [addressData, setAddressData] = useState({
@@ -50,12 +54,57 @@ const Address = ({ setCurrentComp }: IProps) => {
     e.preventDefault()
     
     if (addressData.country && addressData.province && addressData.city && addressData.district && addressData.postalCode && addressData.name && addressData.email && addressData.phoneNumber && addressData.address) {
+      setLoading(true)
       try {
         await postDataAPI('shippingAddress', { ...addressData, recipientName: addressData.name, recipientEmail: addressData.email, recipientPhoneNumber: addressData.phoneNumber }, snap.user.accessToken)
-        setCurrentComp('end')
+
+        const stripe = await loadStripe(STRIPE_PUBLISHABLE_KEY)
+
+        const cartData = snap.cart.filter(item => item.isSelected)
+
+        const checkoutProductData = []
+
+        for (let i = 0; i < cartData.length; i++) {
+          const shirtData = snap.saved.find(item => item.id === cartData[i].id)
+
+          checkoutProductData.push({
+            id: cartData[i].id,
+            qty: cartData[i].qty,
+            shippingDaysCount: cartData[i].shippingDaysCount,
+            price: cartData[i].price,
+            name: shirtData?.name
+          })
+        }
+
+        const addressDataRes = await getDataAPI('shippingAddress', snap.user.accessToken)
+        const addressDetail = addressDataRes.data.data
+
+        const data = {
+          products: checkoutProductData,
+          country: addressDetail.country,
+          province: addressDetail.province,
+          city: addressDetail.city,
+          district: addressDetail.district,
+          postalCode: addressDetail.postalCode,
+          recipientName: addressDetail.recipientName,
+          recipientEmail: addressDetail.recipientEmail,
+          recipientPhoneNumber: addressDetail.recipientPhoneNumber,
+          address: addressDetail.address
+        }
+
+        const res = await postDataAPI('checkout', data, snap.user.accessToken)
+
+        const result = stripe?.redirectToCheckout({
+          sessionId: res.data.id
+        })
+
+        if ((await result)?.error) {
+          console.log((await result)?.error)
+        }
       } catch (err: any) {
         toast.error(err.response.data.msg)
       }
+      setLoading(false)
     }
   }
 
@@ -133,12 +182,18 @@ const Address = ({ setCurrentComp }: IProps) => {
           <label htmlFor='address' className='text-sm font-medium'>Address</label>
           <textarea id='address' name='address' value={addressData.address} onChange={handleChange} className='w-full border outline-none rounded-md p-3 text-sm mt-3 resize-none h-36' />
         </div>
-        <Button
-          customStyles={`${!addressData.country || !addressData.province || !addressData.city || !addressData.district || !addressData.postalCode || !addressData.name || !addressData.email || !addressData.phoneNumber || !addressData.address ? 'bg-gray-200 cursor-not-allowed' : 'bg-primary hover:bg-primary-hover cursor-pointer'} transition duration-200 text-white w-full py-3 text-sm font-semibold`}
-          handleClick={() => {}}
-          text='Proceed to Payment'
-          Icon={FaArrowRight}
-        />
+        <button className={`outline-none rounded-md ${loading || !addressData.country || !addressData.province || !addressData.city || !addressData.district || !addressData.postalCode || !addressData.name || !addressData.email || !addressData.phoneNumber || !addressData.address ? 'bg-gray-200 cursor-not-allowed' : 'bg-primary hover:bg-primary-hover cursor-pointer'} transition duration-200 text-white w-full py-3 text-sm font-semibold flex items-center justify-center gap-4`}>
+          {
+            loading
+            ? <Loader />
+            : (
+              <>
+                <p>Proceed to Payment</p>
+                <FaArrowRight />
+              </>
+            )
+          }
+        </button>
       </form>
     </div>
   )

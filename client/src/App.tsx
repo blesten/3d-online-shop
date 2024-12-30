@@ -8,6 +8,8 @@ import { useEffect } from 'react'
 import state from './store'
 import { useSnapshot } from 'valtio'
 import { getDataAPI } from './utils/baseAPI'
+import PaymentSuccess from './pages/PaymentSuccess'
+import PaymentCancel from './pages/PaymentCancel'
 
 const App = () => {
   const snap = useSnapshot(state)
@@ -67,6 +69,8 @@ const App = () => {
           <Route path='/saved' element={<Saved />} />
           <Route path='/edit/:id' element={<Edit />} />
           <Route path='/cart' element={<Cart />} />
+          <Route path='/payment_success' element={<PaymentSuccess />} />
+          <Route path='/payment_cancel' element={<PaymentCancel />} />
         </Routes>
       </Router>
 

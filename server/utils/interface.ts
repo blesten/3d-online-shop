@@ -57,3 +57,27 @@ export interface IShippingAddress extends IGeneralField {
   recipientEmail: string
   recipientPhoneNumber: string
 }
+
+export interface ICheckout extends IGeneralField {
+  userId: ObjectId
+  products: ICheckoutProduct[]
+  status: string
+  stripeSessionId: string
+  country: string
+  province: string
+  city: string
+  district: string
+  postalCode: string
+  recipientName: string
+  recipientEmail: string
+  recipientPhoneNumber: string
+  address: string
+}
+
+export interface ICheckoutProduct {
+  id: string
+  qty: number
+  name: string
+  shippingDaysCount: number
+  price: number
+}

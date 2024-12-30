@@ -127,7 +127,7 @@ const FrontCart = ({ setCurrentComp }: IProps) => {
           </div>
         </div>
         <div className='flex-[2]'>
-          <div className='mb-8'>
+          {/* <div className='mb-8'>
             <h1 className='font-semibold text-neutral-900'>Gifting</h1>
             <div className='mt-5 rounded-lg border border-neutral-50 p-4 bg-[rgba(255,118,64,.1)] relative'>
               <h1 className='text-neutral-800 font-bold text-sm'>Buying for a loved one?</h1>
@@ -136,7 +136,7 @@ const FrontCart = ({ setCurrentComp }: IProps) => {
               <div className='absolute w-2 h-full bg-[rgba(255,118,64,.2)] top-0 right-12' />
               <GiBowTieRibbon className='absolute top-4 right-7 text-primary text-5xl' />
             </div>
-          </div>
+          </div> */}
           <div>
             <h1 className='font-semibold text-neutral-900'>Price Details</h1>
             <div className='mt-5 rounded-lg border border-neutral-200 bg-neutral-50 p-4'>
