@@ -5,6 +5,7 @@ import EditCustomizer from './../components/edit/EditCustomizer'
 import EditCanvas from './../components/edit/EditCanvas'
 import Navbar from './../components/general/Navbar'
 import state from './../store'
+import HeadInfo from '../utils/HeadInfo'
 
 const Edit = () => {
   const [name, setName] = useState('')
@@ -48,36 +49,39 @@ const Edit = () => {
   }, [id, snap.saved])
   
   return (
-    <main className='w-full h-screen overflow-hidden bg-home-gradient relative'>
-      <Navbar />
-      {
-        shirtColor &&
-        <EditCanvas
+    <>
+      <HeadInfo title='Edit' />
+      <main className='w-full h-screen overflow-hidden bg-home-gradient relative'>
+        <Navbar />
+        {
+          shirtColor &&
+          <EditCanvas
+            isLogoTexture={isLogoTexture}
+            isShirtTexture={isShirtTexture}
+            shirtColor={shirtColor}
+            shirtLogo={shirtLogo === 'default' ? '/images/default_texture.png' : shirtLogo}
+            shirtTexture={shirtTexture === 'default' ? '/images/default_texture.png' : shirtTexture}
+          />
+        }
+        <EditCustomizer
+          id={`${id}`}
+          name={name}
+          setName={setName}
+          size={size}
+          setSize={setSize}
           isLogoTexture={isLogoTexture}
+          setIsLogoTexture={setIsLogoTexture}
           isShirtTexture={isShirtTexture}
+          setIsShirtTexture={setIsShirtTexture}
           shirtColor={shirtColor}
+          setShirtColor={setShirtColor}
           shirtLogo={shirtLogo === 'default' ? '/images/default_texture.png' : shirtLogo}
+          setShirtLogo={setShirtLogo}
           shirtTexture={shirtTexture === 'default' ? '/images/default_texture.png' : shirtTexture}
+          setShirtTexture={setShirtTexture}
         />
-      }
-      <EditCustomizer
-        id={`${id}`}
-        name={name}
-        setName={setName}
-        size={size}
-        setSize={setSize}
-        isLogoTexture={isLogoTexture}
-        setIsLogoTexture={setIsLogoTexture}
-        isShirtTexture={isShirtTexture}
-        setIsShirtTexture={setIsShirtTexture}
-        shirtColor={shirtColor}
-        setShirtColor={setShirtColor}
-        shirtLogo={shirtLogo === 'default' ? '/images/default_texture.png' : shirtLogo}
-        setShirtLogo={setShirtLogo}
-        shirtTexture={shirtTexture === 'default' ? '/images/default_texture.png' : shirtTexture}
-        setShirtTexture={setShirtTexture}
-      />
-    </main>
+      </main>
+    </>
   )
 }
 

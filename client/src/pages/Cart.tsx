@@ -7,6 +7,7 @@ import Address from '../components/cart/Address'
 import Footer from '../components/general/Footer'
 import state from './../store'
 import { IoShirt } from 'react-icons/io5'
+import HeadInfo from '../utils/HeadInfo'
 
 const Cart = () => { 
   const snap = useSnapshot(state)
@@ -15,6 +16,7 @@ const Cart = () => {
 
   return (
     <>
+      <HeadInfo title='Cart' />
       <div className='sticky top-0 left-0 w-full z-50 bg-white'>
         <Navbar />
       </div>

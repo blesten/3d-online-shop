@@ -4,6 +4,7 @@ import { useState } from 'react'
 import ShirtCanvas from './../components/home/ShirtCanvas'
 import Customizer from './../components/general/Customizer'
 import Navbar from './../components/general/Navbar'
+import HeadInfo from '../utils/HeadInfo'
 
 const Home = () => {
   const [isLogoTexture, setIsLogoTexture] = useState(true)
@@ -15,6 +16,7 @@ const Home = () => {
 
   return (
     <>
+      <HeadInfo title='Home' />
       <main className='w-full h-screen overflow-hidden bg-home-gradient relative'>
         <Navbar />
         {

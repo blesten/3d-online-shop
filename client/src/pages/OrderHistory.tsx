@@ -11,6 +11,7 @@ import state from './../store'
 import Loader from '../components/general/Loader'
 import { IoShirt } from 'react-icons/io5'
 import { useNavigate } from 'react-router-dom'
+import HeadInfo from '../utils/HeadInfo'
 
 const OrderHistory = () => {
   const [history, setHistory] = useState<ICheckout[]>([])
@@ -50,6 +51,7 @@ const OrderHistory = () => {
 
   return (
     <>
+      <HeadInfo title='Order History' />
       <Navbar />
       <div className='px-20 mt-4'>
         <h1 className='font-medium text-lg text-primary'>Order History</h1>

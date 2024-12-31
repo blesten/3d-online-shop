@@ -16,6 +16,7 @@ import state from './../store'
 import 'swiper/css'
 import Loader from '../components/general/Loader'
 import { IoShirt } from 'react-icons/io5'
+import HeadInfo from '../utils/HeadInfo'
 
 const Saved = () => {
   const [selectedId, setSelectedId] = useState('')
@@ -106,6 +107,7 @@ const Saved = () => {
 
   return (
     <>
+      <HeadInfo title='Saved' />
       <main className={`w-full h-screen overflow-hidden ${snap.saved.length > 0 ? 'bg-home-gradient' : ''} relative flex flex-col justify-center`}>
         <Navbar isFixed={true} />
         {
