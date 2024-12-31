@@ -1,11 +1,11 @@
 import { BsExclamationCircleFill } from 'react-icons/bs'
 import { useEffect, useRef } from 'react'
-import { ISaved } from '../../utils/interface'
+import { deleteDataAPI } from './../../utils/baseAPI'
+import { useSnapshot } from 'valtio'
+import { ISaved } from './../../utils/interface'
 import { toast } from 'react-toastify'
 import Button from './../general/Button'
 import state from './../../store'
-import { useSnapshot } from 'valtio'
-import { deleteDataAPI } from '../../utils/baseAPI'
 
 interface IProps {
   openDeleteProductOverlay: boolean

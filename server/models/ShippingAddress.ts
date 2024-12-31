@@ -1,5 +1,5 @@
+import { IShippingAddress } from './../utils/interface'
 import mongoose from 'mongoose'
-import { IShippingAddress } from '../utils/interface'
 
 const shippingAddressSchema = new mongoose.Schema<IShippingAddress>({
   userId: {

@@ -1,5 +1,5 @@
-import { FaFacebook, FaInstagram, FaLinkedin, FaWhatsapp, FaXTwitter } from "react-icons/fa6"
-import { MdEmail, MdLocationOn, MdPhone } from "react-icons/md"
+import { FaFacebook, FaInstagram, FaLinkedin, FaWhatsapp, FaXTwitter } from 'react-icons/fa6'
+import { MdEmail, MdLocationOn, MdPhone } from 'react-icons/md'
 
 const Footer = () => {
   return (

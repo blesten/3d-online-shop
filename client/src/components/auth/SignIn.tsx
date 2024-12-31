@@ -1,11 +1,11 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
+import { getDataAPI, postDataAPI } from './../../utils/baseAPI'
 import { FaEye, FaEyeSlash } from 'react-icons/fa6'
-import Loader from './../general/Loader'
-import { validEmail } from '../../utils/validator'
+import { ICart, ISaved } from './../../utils/interface'
+import { validEmail } from './../../utils/validator'
 import { toast } from 'react-toastify'
-import { getDataAPI, postDataAPI } from '../../utils/baseAPI'
+import Loader from './../general/Loader'
 import state from './../../store'
-import { ICart, ISaved } from '../../utils/interface'
 
 interface IProps {
   setSelectedAuthScreen: React.Dispatch<React.SetStateAction<string>>

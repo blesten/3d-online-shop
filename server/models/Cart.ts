@@ -1,5 +1,5 @@
+import { ICart } from './../utils/interface'
 import mongoose from 'mongoose'
-import { ICart } from '../utils/interface'
 
 const cartSchema = new mongoose.Schema<ICart>({
   userId: {

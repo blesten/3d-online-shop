@@ -1,10 +1,10 @@
-import { IoCloseCircleOutline } from "react-icons/io5"
-import { useNavigate } from "react-router-dom"
-import Button from "../components/general/Button"
+import { IoCloseCircleOutline } from 'react-icons/io5'
+import { patchDataAPI } from './../utils/baseAPI'
+import { useNavigate } from 'react-router-dom'
 import { useSnapshot } from 'valtio'
+import { useEffect } from 'react'
+import Button from './../components/general/Button'
 import state from './../store'
-import { useEffect } from "react"
-import { patchDataAPI } from "../utils/baseAPI"
 
 const PaymentCancel = () => {
   const snap = useSnapshot(state)
@@ -14,6 +14,7 @@ const PaymentCancel = () => {
   useEffect(() => {
     const updatePaymentStatus = async() => {
       await patchDataAPI('checkout', {}, snap.user.accessToken)
+      state.cart = []
     }
 
     if (snap.user.accessToken)

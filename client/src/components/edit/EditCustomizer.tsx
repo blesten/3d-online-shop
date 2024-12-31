@@ -1,10 +1,10 @@
-import React, { ChangeEvent, useEffect, useRef, useState } from "react"
-import { SketchPicker } from "react-color"
-import { FaImage } from "react-icons/fa6"
-import { IoMdArrowRoundBack, IoMdSave } from "react-icons/io"
-import Button from "../general/Button"
-import { useNavigate } from "react-router-dom"
-import EditProduct from "../overlay/EditProduct"
+import { ChangeEvent, useEffect, useRef, useState } from 'react'
+import { IoMdArrowRoundBack, IoMdSave } from 'react-icons/io'
+import { SketchPicker } from 'react-color'
+import { useNavigate } from 'react-router-dom'
+import { FaImage } from 'react-icons/fa6'
+import Button from './../general/Button'
+import EditProduct from './../overlay/EditProduct'
 
 interface IProps {
   id: string

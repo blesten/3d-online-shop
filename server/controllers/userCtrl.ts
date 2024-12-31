@@ -1,10 +1,10 @@
+import { validEmail, validPassword } from './../utils/validator'
+import { IDecodedToken, IReqUser } from './../utils/interface'
 import { Request, Response } from 'express'
+import { generateToken } from './../utils/generateToken'
 import bcrypt from 'bcrypt'
+import User from './../models/User'
 import jwt from 'jsonwebtoken'
-import { validEmail, validPassword } from '../utils/validator'
-import User from '../models/User'
-import { generateToken } from '../utils/generateToken'
-import { IDecodedToken, IReqUser } from '../utils/interface'
 
 const userCtrl = {
   register: async(req: Request, res: Response) => {

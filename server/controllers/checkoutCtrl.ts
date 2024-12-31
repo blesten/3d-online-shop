@@ -1,8 +1,8 @@
-import Checkout from '../models/Checkout'
 import { IReqUser } from './../utils/interface'
 import { Response } from 'express'
+import Checkout from './../models/Checkout'
 import dotenv from 'dotenv'
-import Cart from '../models/Cart'
+import Cart from './../models/Cart'
 
 dotenv.config({
   path: 'config/.env'
@@ -33,8 +33,7 @@ const checkoutCtrl = {
         price_data: {
           currency: 'usd',
           product_data: {
-            name: product.name,
-            // images: ['https://placehold.co/600x400']
+            name: product.name
           },
           unit_amount: Math.round(product.price * 100)
         },
@@ -45,8 +44,8 @@ const checkoutCtrl = {
         payment_method_types: ['card'],
         line_items: lineItems,
         mode: 'payment',
-        success_url: 'http://localhost:5173/payment_success',
-        cancel_url: 'http://localhost:5173/payment_cancel'
+        success_url: `${process.env.STRIPE_SUCCESS_URL}`,
+        cancel_url: `${process.env.STRIPE_ERROR_URL}`
       })
 
       newCheckout.stripeSessionId = session.id

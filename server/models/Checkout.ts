@@ -1,5 +1,5 @@
+import { ICheckout } from './../utils/interface'
 import mongoose from 'mongoose'
-import { ICheckout } from '../utils/interface'
 
 const checkoutSchema = new mongoose.Schema<ICheckout>({
   userId: {

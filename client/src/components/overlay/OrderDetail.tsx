@@ -1,9 +1,9 @@
-import { useEffect, useRef } from "react"
-import { AiOutlineClose } from "react-icons/ai"
-import { ICheckout } from "../../utils/interface"
-import { Canvas } from "@react-three/fiber"
-import { Center, Environment } from "@react-three/drei"
-import StaticShirt from "../saved/StaticShirt"
+import { Center, Environment } from '@react-three/drei'
+import { useEffect, useRef } from 'react'
+import { AiOutlineClose } from 'react-icons/ai'
+import { ICheckout } from './../../utils/interface'
+import { Canvas } from '@react-three/fiber'
+import StaticShirt from './../saved/StaticShirt'
 
 interface IProps {
   openOrderDetailOverlay: boolean

@@ -1,9 +1,9 @@
 import { BsFillPatchCheckFill } from 'react-icons/bs'
+import { patchDataAPI } from './../utils/baseAPI'
 import { useNavigate } from 'react-router-dom'
-import Button from './../components/general/Button'
-import { useEffect } from 'react'
-import { patchDataAPI } from '../utils/baseAPI'
 import { useSnapshot } from 'valtio'
+import { useEffect } from 'react'
+import Button from './../components/general/Button'
 import state from './../store'
 
 const PaymentSuccess = () => {

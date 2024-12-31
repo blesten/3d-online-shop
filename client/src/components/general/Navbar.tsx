@@ -1,15 +1,15 @@
 import { MdShoppingBag , MdOutlineShoppingBag, MdLogout } from 'react-icons/md'
 import { IoBookmark, IoBookmarkOutline, IoShirt } from 'react-icons/io5'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import state from './../../store'
-import Button from './Button'
-import { useSnapshot } from 'valtio'
-import Authentication from '../auth/Authentication'
 import { useEffect, useRef, useState } from 'react'
-import { getDataAPI } from '../../utils/baseAPI'
-import { toast } from 'react-toastify'
+import { useSnapshot } from 'valtio'
+import { getDataAPI } from './../../utils/baseAPI'
 import { BsKeyFill } from 'react-icons/bs'
-import ChangePassword from '../overlay/ChangePassword'
+import { toast } from 'react-toastify'
+import ChangePassword from './../overlay/ChangePassword'
+import Authentication from './../auth/Authentication'
+import Button from './Button'
+import state from './../../store'
 
 const Navbar = () => {
   const [openAuthenticationOverlay, setOpenAuthenticationOverlay] = useState(false)

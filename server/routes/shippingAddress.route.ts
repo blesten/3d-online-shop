@@ -1,6 +1,6 @@
+import { isAuthenticated } from './../middlewares/auth'
+import shippingAddressCtrl from './../controllers/shippingAddressCtrl'
 import express from 'express'
-import { isAuthenticated } from '../middlewares/auth'
-import shippingAddressCtrl from '../controllers/shippingAddressCtrl'
 
 const router = express.Router()
 

@@ -1,13 +1,13 @@
-import { FormEvent, useEffect, useRef, useState } from "react"
-import { AiOutlineClose } from "react-icons/ai"
-import Loader from "../general/Loader"
+import { FormEvent, useEffect, useRef, useState } from 'react'
 import { FaAngleDown, FaAngleUp } from "react-icons/fa6"
+import { AiOutlineClose } from 'react-icons/ai'
+import { uploadImages } from './../../utils/cloudinary'
+import { patchDataAPI } from './../../utils/baseAPI'
+import { useNavigate } from 'react-router-dom'
+import { useSnapshot } from 'valtio'
+import { toast } from 'react-toastify'
+import Loader from './../general/Loader'
 import state from './../../store'
-import { useNavigate } from "react-router-dom"
-import { uploadImages } from "../../utils/cloudinary"
-import { toast } from "react-toastify"
-import { useSnapshot } from "valtio"
-import { patchDataAPI } from "../../utils/baseAPI"
 
 interface IProps {
   openEditProductOverlay: boolean

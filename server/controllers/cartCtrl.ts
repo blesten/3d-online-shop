@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import { IReqUser } from './../utils/interface'
-import Cart from '../models/Cart'
+import Cart from './../models/Cart'
 
 const cartCtrl = {
   create: async(req: IReqUser, res: Response) => {

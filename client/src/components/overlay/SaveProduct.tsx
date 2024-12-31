@@ -2,12 +2,12 @@ import { useState, useEffect, useRef, FormEvent } from 'react'
 import { FaAngleDown, FaAngleUp } from 'react-icons/fa6'
 import { AiOutlineClose } from 'react-icons/ai'
 import { v4 as uuidv4 } from 'uuid'
-import { uploadImages } from '../../utils/cloudinary'
+import { uploadImages } from './../../utils/cloudinary'
 import { useSnapshot } from 'valtio'
+import { postDataAPI } from './../../utils/baseAPI'
 import { toast } from 'react-toastify'
-import Loader from '../general/Loader'
+import Loader from './../general/Loader'
 import state from './../../store'
-import { postDataAPI } from '../../utils/baseAPI'
 
 interface IProps {
   openSaveProductOverlay: boolean

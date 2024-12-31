@@ -1,13 +1,13 @@
+import { deleteDataAPI, patchDataAPI } from './../../utils/baseAPI'
+import { Center, Environment } from '@react-three/drei'
 import { AiOutlineClose } from 'react-icons/ai'
 import { FaShippingFast } from 'react-icons/fa'
-import { IoShirt } from 'react-icons/io5'
-import { ICart } from '../../utils/interface'
-import state from './../../store'
-import { Canvas } from '@react-three/fiber'
-import { Center, Environment } from '@react-three/drei'
-import StaticShirt from '../saved/StaticShirt'
 import { useSnapshot } from 'valtio'
-import { deleteDataAPI, patchDataAPI } from '../../utils/baseAPI'
+import { IoShirt } from 'react-icons/io5'
+import { Canvas } from '@react-three/fiber'
+import { ICart } from './../../utils/interface'
+import state from './../../store'
+import StaticShirt from './../saved/StaticShirt'
 
 interface IProps {
   loopIdx: number

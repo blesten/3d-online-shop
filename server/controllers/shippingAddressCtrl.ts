@@ -1,6 +1,6 @@
 import { Response } from 'express'
 import { IReqUser } from './../utils/interface'
-import ShippingAddress from '../models/ShippingAddress'
+import ShippingAddress from './../models/ShippingAddress'
 
 const shippingAddressCtrl = {
   create: async(req: IReqUser, res: Response) => {

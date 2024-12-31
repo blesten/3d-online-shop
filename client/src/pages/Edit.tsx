@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
-import EditCanvas from '../components/edit/EditCanvas'
-import Navbar from './../components/general/Navbar'
-import { useParams } from 'react-router-dom'
 import { useSnapshot } from 'valtio'
+import { useParams } from 'react-router-dom'
+import EditCustomizer from './../components/edit/EditCustomizer'
+import EditCanvas from './../components/edit/EditCanvas'
+import Navbar from './../components/general/Navbar'
 import state from './../store'
-import EditCustomizer from '../components/edit/EditCustomizer'
 
 const Edit = () => {
   const [name, setName] = useState('')

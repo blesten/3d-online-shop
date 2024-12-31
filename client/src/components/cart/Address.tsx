@@ -1,12 +1,12 @@
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa6'
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
-import { toast } from 'react-toastify'
-import { getDataAPI, postDataAPI } from '../../utils/baseAPI'
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa6'
+import { getDataAPI, postDataAPI } from './../../utils/baseAPI'
+import { STRIPE_PUBLISHABLE_KEY } from './../../config/key'
 import { useSnapshot } from 'valtio'
-import state from './../../store'
 import { loadStripe } from '@stripe/stripe-js'
-import { STRIPE_PUBLISHABLE_KEY } from '../../config/key'
-import Loader from '../general/Loader'
+import { toast } from 'react-toastify'
+import state from './../../store'
+import Loader from './../general/Loader'
 
 interface IProps {
   setCurrentComp: React.Dispatch<React.SetStateAction<string>>

@@ -1,16 +1,16 @@
 import {  BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Bounce, ToastContainer } from 'react-toastify'
-import Home from './pages/Home'
-import Saved from './pages/Saved'
-import Edit from './pages/Edit'
-import Cart from './pages/Cart'
-import { useEffect } from 'react'
-import state from './store'
 import { useSnapshot } from 'valtio'
 import { getDataAPI } from './utils/baseAPI'
+import { useEffect } from 'react'
 import PaymentSuccess from './pages/PaymentSuccess'
 import PaymentCancel from './pages/PaymentCancel'
 import OrderHistory from './pages/OrderHistory'
+import Saved from './pages/Saved'
+import state from './store'
+import Home from './pages/Home'
+import Edit from './pages/Edit'
+import Cart from './pages/Cart'
 
 const App = () => {
   const snap = useSnapshot(state)

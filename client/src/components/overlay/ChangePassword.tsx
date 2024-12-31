@@ -1,12 +1,12 @@
 import { FormEvent, useEffect, useRef, useState } from 'react'
-import { AiOutlineClose } from 'react-icons/ai'
 import { FaEye, FaEyeSlash } from 'react-icons/fa6'
-import Loader from '../general/Loader'
-import { toast } from 'react-toastify'
-import { patchDataAPI } from '../../utils/baseAPI'
+import { AiOutlineClose } from 'react-icons/ai'
+import { validPassword } from './../../utils/validator'
+import { patchDataAPI } from './../../utils/baseAPI'
 import { useSnapshot } from 'valtio'
+import { toast } from 'react-toastify'
+import Loader from './../general/Loader'
 import state from './../../store'
-import { validPassword } from '../../utils/validator'
 
 interface IProps {
   openChangePasswordOverlay: boolean

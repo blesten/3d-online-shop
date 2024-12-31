@@ -1,5 +1,5 @@
+import { ISaved } from './../utils/interface'
 import mongoose from 'mongoose'
-import { ISaved } from '../utils/interface'
 
 const savedSchema = new mongoose.Schema<ISaved>({
   userId: {

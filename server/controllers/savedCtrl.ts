@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
-import { IReqUser } from '../utils/interface'
-import Saved from '../models/Saved'
+import { IReqUser } from './../utils/interface'
+import Saved from './../models/Saved'
 
 const savedCtrl = {
   create: async(req: IReqUser, res: Response) => {

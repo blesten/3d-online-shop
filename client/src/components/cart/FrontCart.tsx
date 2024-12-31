@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react"
-import { useSnapshot } from "valtio"
+import { deleteDataAPI, patchDataAPI } from './../../utils/baseAPI'
+import { useEffect, useState } from 'react'
+import { GiBowTieRibbon } from 'react-icons/gi'
+import { FaArrowRight } from 'react-icons/fa6'
+import { useSnapshot } from 'valtio'
+import Authentication from './../auth/Authentication'
+import CartItem from './CartItem'
+import Button from './../general/Button'
 import state from './../../store'
-import CartItem from "./CartItem"
-import { GiBowTieRibbon } from "react-icons/gi"
-import Button from "../general/Button"
-import { FaArrowRight } from "react-icons/fa6"
-import { deleteDataAPI, patchDataAPI } from "../../utils/baseAPI"
-import Authentication from "../auth/Authentication"
 
 interface IProps {
   setCurrentComp: React.Dispatch<React.SetStateAction<string>>
@@ -85,7 +85,7 @@ const FrontCart = ({ setCurrentComp }: IProps) => {
 
   return (
     <>
-      <div className='flex gap-20 px-20 mt-12 mb-16'>
+      <div className='flex gap-20 px-20 mt-10 mb-16'>
         <div className='flex-[3]'>
           <div>
             <div className='flex items-center justify-between'>
@@ -137,46 +137,48 @@ const FrontCart = ({ setCurrentComp }: IProps) => {
               <GiBowTieRibbon className='absolute top-4 right-7 text-primary text-5xl' />
             </div>
           </div> */}
-          <div>
-            <h1 className='font-semibold text-neutral-900'>Price Details</h1>
-            <div className='mt-5 rounded-lg border border-neutral-200 bg-neutral-50 p-4'>
-              <p className='font-medium text-neutral-900 text-sm'>{snap.cart.reduce((acc, item) => acc + item.qty , isGiftWrap ? 1 : 0)} {snap.cart.reduce((acc, item) => acc + item.qty , isGiftWrap ? 1 : 0) > 1 ? 'Items' : 'Item'}</p>
-              {
-                snap.cart.filter(item => item.isSelected).map((item, idx) => {
-                  const shirtData = snap.saved.find(it => it.id === item.id)
+          <div className='sticky top-32'>
+            <div>
+              <h1 className='font-semibold text-neutral-900'>Price Details</h1>
+              <div className='mt-5 rounded-lg border border-neutral-200 bg-neutral-50 p-4'>
+                <p className='font-medium text-neutral-900 text-sm'>{snap.cart.reduce((acc, item) => acc + item.qty , isGiftWrap ? 1 : 0)} {snap.cart.reduce((acc, item) => acc + item.qty , isGiftWrap ? 1 : 0) > 1 ? 'Items' : 'Item'}</p>
+                {
+                  snap.cart.filter(item => item.isSelected).map((item, idx) => {
+                    const shirtData = snap.saved.find(it => it.id === item.id)
 
-                  return (
-                    <div className={`flex items-center justify-between ${idx === 0 ? 'mt-5' : 'mt-3'}`}>
-                      <p className='text-xs text-gray-400 font-semibold'>{item.qty}x {shirtData?.name} T-Shirt</p>
-                      <p className='text-neutral-700 text-sm font-medium'>${(item.qty * item.price).toFixed(2)}</p>
-                    </div>
-                  )
-                })
-              }
-              {
-                isGiftWrap &&
+                    return (
+                      <div className={`flex items-center justify-between ${idx === 0 ? 'mt-5' : 'mt-3'}`}>
+                        <p className='text-xs text-gray-400 font-semibold'>{item.qty}x {shirtData?.name} T-Shirt</p>
+                        <p className='text-neutral-700 text-sm font-medium'>${(item.qty * item.price).toFixed(2)}</p>
+                      </div>
+                    )
+                  })
+                }
+                {
+                  isGiftWrap &&
+                  <div className='flex items-center justify-between mt-3'>
+                    <p className='text-xs text-gray-400 font-semibold'>Gift Wrap</p>
+                    <p className='text-neutral-700 text-sm font-medium'>$20.00</p>
+                  </div>
+                }
                 <div className='flex items-center justify-between mt-3'>
-                  <p className='text-xs text-gray-400 font-semibold'>Gift Wrap</p>
-                  <p className='text-neutral-700 text-sm font-medium'>$20.00</p>
+                  <p className='text-xs text-gray-400 font-semibold'>Delivery Charges</p>
+                  <p className='text-neutral-700 text-sm font-medium'>Free Delivery</p>
                 </div>
-              }
-              <div className='flex items-center justify-between mt-3'>
-                <p className='text-xs text-gray-400 font-semibold'>Delivery Charges</p>
-                <p className='text-neutral-700 text-sm font-medium'>Free Delivery</p>
-              </div>
-              <hr className='my-4' />
-              <div className='flex items-center justify-between text-sm font-semibold'>
-                <p className=''>Total Amount</p>
-                <p>${snap.cart.filter(item => item.isSelected).reduce((acc, item) => acc + (item.qty * item.price), isGiftWrap ? 20 : 0).toFixed(2)}</p>
+                <hr className='my-4' />
+                <div className='flex items-center justify-between text-sm font-semibold'>
+                  <p className=''>Total Amount</p>
+                  <p>${snap.cart.filter(item => item.isSelected).reduce((acc, item) => acc + (item.qty * item.price), isGiftWrap ? 20 : 0).toFixed(2)}</p>
+                </div>
               </div>
             </div>
+            <Button
+              text='Place Order'
+              Icon={FaArrowRight}
+              customStyles={`${snap.cart.filter(item => item.isSelected).length < 1 ? 'bg-gray-200 cursor-not-allowed' : 'bg-primary hover:bg-primary-hover cursor-pointer'} text-white text-sm font-semibold w-full py-3 transition duration-200 mt-6`}
+              handleClick={handlePlaceOrderBtn}
+            />
           </div>
-          <Button
-            text='Place Order'
-            Icon={FaArrowRight}
-            customStyles={`${snap.cart.filter(item => item.isSelected).length < 1 ? 'bg-gray-200 cursor-not-allowed' : 'bg-primary hover:bg-primary-hover cursor-pointer'} text-white text-sm font-semibold w-full py-3 transition duration-200 mt-6`}
-            handleClick={handlePlaceOrderBtn}
-          />
         </div>
       </div>
       

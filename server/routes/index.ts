@@ -1,15 +1,15 @@
-import user from './user.route'
-import saved from './saved.route'
-import cart from './cart.route'
 import shippingAddress from './shippingAddress.route'
 import checkout from './checkout.route'
+import saved from './saved.route'
+import user from './user.route'
+import cart from './cart.route'
 
 const routers = {
-  user,
-  saved,
-  cart,
   shippingAddress,
-  checkout
+  checkout,
+  saved,
+  user,
+  cart,
 }
 
 export default routers

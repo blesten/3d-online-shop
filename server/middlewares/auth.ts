@@ -1,7 +1,7 @@
+import { IDecodedToken, IReqUser } from './../utils/interface'
 import { Response, NextFunction } from 'express'
 import jwt from 'jsonwebtoken'
-import { IDecodedToken, IReqUser } from '../utils/interface'
-import User from '../models/User'
+import User from './../models/User'
 
 export const isAuthenticated = async(req: IReqUser, res: Response, next: NextFunction) => {
   try {

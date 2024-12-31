@@ -3,7 +3,7 @@ import { IoMdArrowRoundBack } from 'react-icons/io'
 import { SketchPicker } from 'react-color'
 import { IoMdSave } from 'react-icons/io'
 import { FaImage } from 'react-icons/fa6'
-import SaveProduct from '../overlay/SaveProduct'
+import SaveProduct from './../overlay/SaveProduct'
 import Button from './Button'
 
 interface IProps {

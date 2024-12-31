@@ -1,9 +1,9 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
+import { validEmail, validPassword } from './../../utils/validator'
 import { FaEye, FaEyeSlash } from 'react-icons/fa6'
-import Loader from '../general/Loader'
+import { postDataAPI } from './../../utils/baseAPI'
 import { toast } from 'react-toastify'
-import { validEmail, validPassword } from '../../utils/validator'
-import { postDataAPI } from '../../utils/baseAPI'
+import Loader from '../general/Loader'
 
 interface IProps {
   setSelectedAuthScreen: React.Dispatch<React.SetStateAction<string>>
