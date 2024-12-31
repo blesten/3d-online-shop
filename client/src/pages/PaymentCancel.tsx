@@ -21,6 +21,14 @@ const PaymentCancel = () => {
       updatePaymentStatus()
   }, [snap.user])
 
+  useEffect(() => {
+    if (!snap.user.loading) {
+      if (!snap.user.accessToken) {
+        navigate('/')
+      }
+    }
+  }, [snap.user, navigate])
+
   return (
     <div className='w-screen h-screen overflow-hidden px-14 py-8 flex flex-col justify-center'>
       <div className='flex items-center gap-3 fixed top-8 left-14'>

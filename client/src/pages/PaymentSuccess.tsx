@@ -1,4 +1,4 @@
-import { BsFillPatchCheckFill } from 'react-icons/bs'
+import { IoCheckmarkCircleOutline } from 'react-icons/io5'
 import { patchDataAPI } from './../utils/baseAPI'
 import { useNavigate } from 'react-router-dom'
 import { useSnapshot } from 'valtio'
@@ -21,6 +21,14 @@ const PaymentSuccess = () => {
       updatePaymentStatus()
   }, [snap.user])
 
+  useEffect(() => {
+    if (!snap.user.loading) {
+      if (!snap.user.accessToken) {
+        navigate('/')
+      }
+    }
+  }, [snap.user, navigate])
+
   return (
     <div className='w-screen h-screen overflow-hidden px-14 py-8 flex flex-col justify-center'>
       <div className='flex items-center gap-3 fixed top-8 left-14'>
@@ -28,7 +36,7 @@ const PaymentSuccess = () => {
         <h1 className='text-primary font-medium text-lg'>Stitch Lab</h1>
       </div>
       <div className='flex items-center justify-center flex-col'>
-        <BsFillPatchCheckFill className='text-green-500 text-[10rem] mb-8' />
+        <IoCheckmarkCircleOutline className='text-green-500 text-[10rem] mb-8' />
         <h1 className='text-primary text-2xl font-medium'>Payment Success</h1>
         <p className='text-xs text-neutral-700 mt-4'>Thank you for your payment. Your product will be delivered soon.</p>
         <Button

@@ -48,10 +48,12 @@ const SignIn = ({ setSelectedAuthScreen, setOpenAuthenticationOverlay, isProgres
       }
 
       try {
+        state.user = { ...state.user, loading: true }
         const userRes = await postDataAPI('user/login', signInData)
         state.user = {
           user: userRes.data.user,
-          accessToken: userRes.data.accessToken
+          accessToken: userRes.data.accessToken,
+          loading: false
         }
         localStorage.setItem('SL_IS_AUTH', 'Y')
         
@@ -104,37 +106,33 @@ const SignIn = ({ setSelectedAuthScreen, setOpenAuthenticationOverlay, isProgres
 
   return (
     <>
-      <div className='flex-1'>
-        <h1 className='text-primary font-medium text-xl'>Sign In</h1>
-        <form onSubmit={handleSubmit} className='mt-6'>
-          <div className='mb-6'>
-            <label htmlFor='email' className='text-sm text-neutral-800'>Email</label>
-            <input type='text' id='email' name='email' value={signInData.email} onChange={handleChange} className='w-full border border-neutral-400 text-sm text-neutral-800 p-3 outline-none mt-3 rounded-md' />
-          </div>
-          <div className='mb-6'>
-            <label htmlFor='password' className='text-sm text-neutral-800'>Password</label>
-            <div className='w-full border border-neutral-400 flex items-center justify-between gap-4 rounded-md mt-3 p-3'>
-              <input type={showPassword ? 'text' : 'password'} id='password' name='password' value={signInData.password} onChange={handleChange} className='w-full text-sm text-neutral-800 outline-none' />
-              {
-                showPassword
-                ? <FaEyeSlash onClick={() => setShowPassword(false)} className='cursor-pointer text-neutral-400' />
-                : <FaEye onClick={() => setShowPassword(true)} className='cursor-pointer text-neutral-400' />
-              }
-            </div>
-          </div>
-          <button className={`${loading || !signInData.email || !signInData.password ? 'bg-gray-200 cursor-not-allowed' : 'bg-primary hover:bg-primary-hover cursor-pointer'} text-sm text-white w-full p-3 font-medium transition duration-200 outline-noen rounded-md`}>
+      <img src='/images/logo.svg' alt='Stitch Lab' className='w-10 m-auto mb-4' />
+      <h1 className='text-primary font-semibold text-xl text-center'>Sign In</h1>
+      <form onSubmit={handleSubmit} className='mt-6'>
+        <div className='mb-6'>
+          <label htmlFor='email' className='text-sm text-neutral-800'>Email</label>
+          <input type='text' id='email' name='email' value={signInData.email} onChange={handleChange} className='w-full border border-neutral-400 text-sm text-neutral-800 p-3 outline-none mt-3 rounded-md' />
+        </div>
+        <div className='mb-6'>
+          <label htmlFor='password' className='text-sm text-neutral-800'>Password</label>
+          <div className='w-full border border-neutral-400 flex items-center justify-between gap-4 rounded-md mt-3 p-3'>
+            <input type={showPassword ? 'text' : 'password'} id='password' name='password' value={signInData.password} onChange={handleChange} className='w-full text-sm text-neutral-800 outline-none' />
             {
-              loading
-              ? <Loader />
-              : 'Sign In'
+              showPassword
+              ? <FaEyeSlash onClick={() => setShowPassword(false)} className='cursor-pointer text-neutral-400' />
+              : <FaEye onClick={() => setShowPassword(true)} className='cursor-pointer text-neutral-400' />
             }
-          </button>
-          <p className='text-xs text-center mt-3 text-neutral-800'>Not yet have an account? Click <span onClick={() => setSelectedAuthScreen('signUp')} className='cursor-pointer text-blue-500 underline'>here</span></p>
-        </form>
-      </div>
-      <div className='flex-1'>
-        <img src='/images/sign-in.svg' alt='Sign In' className='pointer-events-none' />
-      </div>
+          </div>
+        </div>
+        <button className={`${loading || !signInData.email || !signInData.password ? 'bg-gray-200 cursor-not-allowed' : 'bg-primary hover:bg-primary-hover cursor-pointer'} text-sm text-white w-full p-3 font-medium transition duration-200 outline-noen rounded-md`}>
+          {
+            loading
+            ? <Loader />
+            : 'Sign In'
+          }
+        </button>
+        <p className='text-xs text-center mt-3 text-neutral-800'>Not yet have an account? Click <span onClick={() => setSelectedAuthScreen('signUp')} className='cursor-pointer text-blue-500 underline'>here</span></p>
+      </form>
     </>
   )
 }

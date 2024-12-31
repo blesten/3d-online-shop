@@ -69,52 +69,48 @@ const SignUp = ({ setSelectedAuthScreen }: IProps) => {
 
   return (
     <>
-      <div className='flex-1'>
-        <h1 className='text-primary font-medium text-xl'>Sign Up</h1>
-        <form onSubmit={handleSubmit} className='mt-6'>
-          <div className='mb-6'>
-            <label htmlFor='name' className='text-sm text-neutral-800'>Name</label>
-            <input type='text' id='name' name='name' value={signUpData.name} onChange={handleChange} className='w-full border border-neutral-400 text-sm text-neutral-800 p-3 outline-none mt-3 rounded-md' />
-          </div>
-          <div className='mb-6'>
-            <label htmlFor='email' className='text-sm text-neutral-800'>Email</label>
-            <input type='text' id='email' name='email' value={signUpData.email} onChange={handleChange} className='w-full border border-neutral-400 text-sm text-neutral-800 p-3 outline-none mt-3 rounded-md' />
-          </div>
-          <div className='mb-6'>
-            <label htmlFor='password' className='text-sm text-neutral-800'>Password</label>
-            <div className='w-full border border-neutral-400 flex items-center justify-between gap-4 rounded-md mt-3 p-3'>
-              <input type={showPassword ? 'text' : 'password'} id='password' name='password' value={signUpData.password} onChange={handleChange} className='w-full text-sm text-neutral-800 outline-none' />
-              {
-                showPassword
-                ? <FaEyeSlash onClick={() => setShowPassword(false)} className='cursor-pointer text-neutral-400' />
-                : <FaEye onClick={() => setShowPassword(true)} className='cursor-pointer text-neutral-400' />
-              }
-            </div>
-          </div>
-          <div className='mb-6'>
-            <label htmlFor='passwordConfirmation' className='text-sm text-neutral-800'>Password Confirmation</label>
-            <div className='w-full border border-neutral-400 flex items-center justify-between gap-4 rounded-md mt-3 p-3'>
-              <input type={showPasswordConfirmation ? 'text' : 'password'} id='passwordConfirmation' name='passwordConfirmation' value={signUpData.passwordConfirmation} onChange={handleChange} className='w-full text-sm text-neutral-800 outline-none' />
-              {
-                showPasswordConfirmation
-                ? <FaEyeSlash onClick={() => setShowPasswordConfirmation(false)} className='cursor-pointer text-neutral-400' />
-                : <FaEye onClick={() => setShowPasswordConfirmation(true)} className='cursor-pointer text-neutral-400' />
-              }
-            </div>
-          </div>
-          <button className={`${loading || !signUpData.name || !signUpData.email || !signUpData.password || !signUpData.passwordConfirmation ? 'bg-gray-200 cursor-not-allowed' : 'bg-primary hover:bg-primary-hover cursor-pointer'} text-sm text-white w-full p-3 font-medium transition duration-200 outline-none rounded-md`}>
+      <img src='/images/logo.svg' alt='Stitch Lab' className='w-10 m-auto mb-4' />
+      <h1 className='text-primary font-semibold text-center text-xl'>Sign Up</h1>
+      <form onSubmit={handleSubmit} className='mt-6'>
+        <div className='mb-6'>
+          <label htmlFor='name' className='text-sm text-neutral-800'>Name</label>
+          <input type='text' id='name' name='name' value={signUpData.name} onChange={handleChange} className='w-full border border-neutral-400 text-sm text-neutral-800 p-3 outline-none mt-3 rounded-md' />
+        </div>
+        <div className='mb-6'>
+          <label htmlFor='email' className='text-sm text-neutral-800'>Email</label>
+          <input type='text' id='email' name='email' value={signUpData.email} onChange={handleChange} className='w-full border border-neutral-400 text-sm text-neutral-800 p-3 outline-none mt-3 rounded-md' />
+        </div>
+        <div className='mb-6'>
+          <label htmlFor='password' className='text-sm text-neutral-800'>Password</label>
+          <div className='w-full border border-neutral-400 flex items-center justify-between gap-4 rounded-md mt-3 p-3'>
+            <input type={showPassword ? 'text' : 'password'} id='password' name='password' value={signUpData.password} onChange={handleChange} className='w-full text-sm text-neutral-800 outline-none' />
             {
-              loading
-              ? <Loader />
-              : 'Sign Up'
+              showPassword
+              ? <FaEyeSlash onClick={() => setShowPassword(false)} className='cursor-pointer text-neutral-400' />
+              : <FaEye onClick={() => setShowPassword(true)} className='cursor-pointer text-neutral-400' />
             }
-          </button>
-          <p className='text-xs text-center mt-3 text-neutral-800'>Already have an account? Click <span onClick={() => setSelectedAuthScreen('signIn')} className='cursor-pointer text-blue-500 underline'>here</span></p>
-        </form>
-      </div>
-      <div className='flex-1'>
-        <img src='/images/sign-up.svg' alt='Sign Up' className='w-[90%]' />
-      </div>
+          </div>
+        </div>
+        <div className='mb-6'>
+          <label htmlFor='passwordConfirmation' className='text-sm text-neutral-800'>Password Confirmation</label>
+          <div className='w-full border border-neutral-400 flex items-center justify-between gap-4 rounded-md mt-3 p-3'>
+            <input type={showPasswordConfirmation ? 'text' : 'password'} id='passwordConfirmation' name='passwordConfirmation' value={signUpData.passwordConfirmation} onChange={handleChange} className='w-full text-sm text-neutral-800 outline-none' />
+            {
+              showPasswordConfirmation
+              ? <FaEyeSlash onClick={() => setShowPasswordConfirmation(false)} className='cursor-pointer text-neutral-400' />
+              : <FaEye onClick={() => setShowPasswordConfirmation(true)} className='cursor-pointer text-neutral-400' />
+            }
+          </div>
+        </div>
+        <button className={`${loading || !signUpData.name || !signUpData.email || !signUpData.password || !signUpData.passwordConfirmation ? 'bg-gray-200 cursor-not-allowed' : 'bg-primary hover:bg-primary-hover cursor-pointer'} text-sm text-white w-full p-3 font-medium transition duration-200 outline-none rounded-md`}>
+          {
+            loading
+            ? <Loader />
+            : 'Sign Up'
+          }
+        </button>
+        <p className='text-xs text-center mt-3 text-neutral-800'>Already have an account? Click <span onClick={() => setSelectedAuthScreen('signIn')} className='cursor-pointer text-blue-500 underline'>here</span></p>
+      </form>
     </>
   )
 }

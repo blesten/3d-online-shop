@@ -11,7 +11,11 @@ import Authentication from './../auth/Authentication'
 import Button from './Button'
 import state from './../../store'
 
-const Navbar = () => {
+interface IProps {
+  isFixed?: boolean
+}
+
+const Navbar = ({ isFixed }: IProps) => {
   const [openAuthenticationOverlay, setOpenAuthenticationOverlay] = useState(false)
   const [selectedAuthScreen, setSelectedAuthScreen] = useState('signIn')
   const [openProfileDropdown, setOpenProfileDropdown] = useState(false)
@@ -67,7 +71,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className='flex items-center justify-between px-20 py-8'>
+      <div className={`flex items-center justify-between px-20 py-8 ${isFixed ? 'fixed top-0 w-full left-0' : ''}`}>
         <Link to='/' className='flex items-center gap-5 outline-none'>
           <img src='/images/logo.svg' alt='Stanley Claudius - 3D Online Shop Sample Works'  className='w-10 h-10' />
           <h1 className='text-primary font-semibold text-lg'>Stitch Lab</h1>
@@ -110,18 +114,18 @@ const Navbar = () => {
                     : <p className='text-white font-medium'>{snap.user.user?.name[0]}</p>
                   }
                 </div>
-                <div className={`absolute top-full mt-2 right-0 w-[200px] bg-white rounded-md border border-neutral-100 z-40 transition duration-100 origin-top ${openProfileDropdown ? 'scale-y-100 pointer-events-auto' : 'scale-y-0 pointer-events-none'}`}>
+                <div className={`shadow-md absolute top-full mt-2 right-0 w-[200px] bg-white rounded-md border border-neutral-100 z-40 transition duration-100 origin-top ${openProfileDropdown ? 'scale-y-100 pointer-events-auto' : 'scale-y-0 pointer-events-none'}`}>
                   <div onClick={() => setOpenChangePasswordOverlay(true)} className='flex items-center gap-3 py-3 cursor-pointer px-5 text-sm transition'>
-                    <BsKeyFill />
+                    <BsKeyFill className='text-orange-500' />
                     <p>Change Password</p>
                   </div>
-                  <Link to='/order_history' className='flex items-center gap-3 py-3 px-5 text-sm transition'>
-                    <IoShirt />
+                  <Link to='/order_history' className='flex items-center gap-3 py-3 px-5 text-sm transition outline-none'>
+                    <IoShirt className='text-green-400' />
                     <p>Order History</p>
                   </Link>
                   <hr />
                   <div onClick={handleLogout} className='flex items-center gap-3 py-3 px-5 text-sm transition cursor-pointer'>
-                    <MdLogout />
+                    <MdLogout className='text-red-500' />
                     <p>Logout</p>
                   </div>
                 </div>

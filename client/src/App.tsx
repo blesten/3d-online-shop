@@ -11,6 +11,7 @@ import state from './store'
 import Home from './pages/Home'
 import Edit from './pages/Edit'
 import Cart from './pages/Cart'
+import NotFound from './pages/NotFound'
 
 const App = () => {
   const snap = useSnapshot(state)
@@ -49,6 +50,7 @@ const App = () => {
 
   useEffect(() => {
     const getLoginUserData = async() => {
+      state.user = { ...state.user, loading: true }
       const lsAuth = localStorage.getItem('SL_IS_AUTH')
       if (lsAuth && lsAuth === 'Y') {
         const res = await getDataAPI('user/refresh_token')
@@ -57,6 +59,7 @@ const App = () => {
           user: res.data.user
         }
       }
+      state.user = { ...state.user, loading: false }
     }
 
     getLoginUserData()
@@ -73,6 +76,7 @@ const App = () => {
           <Route path='/payment_success' element={<PaymentSuccess />} />
           <Route path='/payment_cancel' element={<PaymentCancel />} />
           <Route path='/order_history' element={<OrderHistory />} />
+          <Route path='*' element={<NotFound />} />
         </Routes>
       </Router>
 

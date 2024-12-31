@@ -26,6 +26,7 @@ export interface IUser {
 }
 
 export interface IUserState {
+  loading: boolean
   accessToken: string
   user: IUser
 }

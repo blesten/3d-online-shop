@@ -9,12 +9,16 @@ import Footer from './../components/general/Footer'
 import Navbar from './../components/general/Navbar'
 import state from './../store'
 import Loader from '../components/general/Loader'
+import { IoShirt } from 'react-icons/io5'
+import { useNavigate } from 'react-router-dom'
 
 const OrderHistory = () => {
   const [history, setHistory] = useState<ICheckout[]>([])
   const [openOrderDetailOverlay, setOpenOrderDetailOverlay] = useState(false)
   const [selectedOrder, setSelectedOrder] = useState<Partial<ICheckout>>({})
   const [loading, setLoading] = useState(false)
+
+  const navigate = useNavigate()
 
   const snap = useSnapshot(state)
 
@@ -35,6 +39,14 @@ const OrderHistory = () => {
       getHistoryData()
     }
   }, [snap.user])
+
+  useEffect(() => {
+    if (!snap.user.loading) {
+      if (!snap.user.accessToken) {
+        navigate('/')
+      }
+    }
+  }, [snap.user, navigate])
 
   return (
     <>
@@ -86,9 +98,12 @@ const OrderHistory = () => {
                     </table>
                   )
                   : (
-                    <div className='flex flex-col items-center mt-3'>
-                      <img src='/images/empty_history.svg' alt='Stitch Lab' className='w-80' />
-                      <p className='text-neutral-400 mt-12'>Order history is currently empty</p>
+                    <div className='flex flex-col items-center mt-16'>
+                      <div className='relative'>
+                        <IoShirt className='text-gray-300 text-9xl' />
+                        <div className='absolute w-3 h-[200px] rotate-45 bg-gray-300 -top-8 left-1/2 -translate-x-1/2' />
+                      </div>
+                      <p className='text-gray-400 mt-14'>You don&apos;t have any order history right now</p>
                     </div>
                   )
                 }

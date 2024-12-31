@@ -6,6 +6,7 @@ import FrontCart from '../components/cart/FrontCart'
 import Address from '../components/cart/Address'
 import Footer from '../components/general/Footer'
 import state from './../store'
+import { IoShirt } from 'react-icons/io5'
 
 const Cart = () => { 
   const snap = useSnapshot(state)
@@ -22,9 +23,12 @@ const Cart = () => {
       {
         snap.cart.length === 0
         ? (
-          <div className='flex flex-col items-center mt-14'>
-            <img src='/images/empty_cart.svg' alt='Stitch Lab' className='w-96' />
-            <p className='text-neutral-400 mt-12'>Your cart is currently empty</p>
+          <div className='flex flex-col items-center mt-20'>
+            <div className='relative'>
+              <IoShirt className='text-gray-300 text-9xl' />
+              <div className='absolute w-3 h-[200px] rotate-45 bg-gray-300 -top-8 left-1/2 -translate-x-1/2' />
+            </div>
+            <p className='text-gray-400 mt-14'>Your cart is currently empty</p>
           </div>
         )
         : (

@@ -10,7 +10,9 @@ const state = proxy<
 >({
   saved: [],
   cart: [],
-  user: {}
+  user: {
+    loading: true
+  }
 })
 
 export default state
