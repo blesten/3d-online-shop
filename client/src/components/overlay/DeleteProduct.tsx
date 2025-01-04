@@ -70,8 +70,8 @@ const DeleteProduct = ({
   })
 
   return (
-    <div className={`fixed top-0 left-0 bottom-0 right-0 bg-[rgba(0,0,0,.8)] flex items-center justify-center z-30 transition duration-200 ${openDeleteProductOverlay ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
-      <div ref={deleteProductOverlayRef} className={`bg-white w-1/3 rounded-xl px-7 py-6 transition duration-200 delay-100 ${openDeleteProductOverlay ? 'translate-y-0 pointer-events-auto opacity-100' : 'opacity-0 pointer-events-none -translate-y-12'}`}>
+    <div className={`fixed top-0 left-0 bottom-0 right-0 bg-[rgba(0,0,0,.8)] flex items-center justify-center z-30 transition duration-200 ${openDeleteProductOverlay ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'} px-6`}>
+      <div ref={deleteProductOverlayRef} className={`bg-white xl:w-1/3 lg:w-1/2 md:w-2/3 w-full rounded-xl px-7 py-6 transition duration-200 delay-100 ${openDeleteProductOverlay ? 'translate-y-0 pointer-events-auto opacity-100' : 'opacity-0 pointer-events-none -translate-y-12'}`}>
         <BsExclamationCircleFill className='text-orange-400 m-auto text-9xl' />
         <h1 className='text-center mt-6'>Are you sure to delete <span className='font-medium'>{shirtName}</span> T-Shirt?</h1>
         <div className='flex items-center justify-center gap-7 mt-8'>

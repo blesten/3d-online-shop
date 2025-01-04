@@ -26,9 +26,9 @@ const OrderDetail = ({ openOrderDetailOverlay, setOpenOrderDetailOverlay, select
   }, [openOrderDetailOverlay, setOpenOrderDetailOverlay])
 
   return (
-    <div className={`fixed top-0 left-0 bottom-0 right-0 bg-[rgba(0,0,0,.7)] flex items-center justify-center transition duration-200 ${openOrderDetailOverlay ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
-      <div ref={orderDetailOverlayRef} className={`bg-white w-1/2 rounded-md transition duration-200 ${openOrderDetailOverlay ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-14 pointer-events-none'}`}>
-        <div className='flex items-center justify-between border-b border-neutral-200 p-5'>
+    <div className={`fixed top-0 left-0 bottom-0 right-0 bg-[rgba(0,0,0,.7)] flex items-center justify-center transition duration-200 ${openOrderDetailOverlay ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'} px-6`}>
+      <div ref={orderDetailOverlayRef} className={`bg-white lg:w-1/2 md:w-2/3 w-full rounded-md transition duration-200 ${openOrderDetailOverlay ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-14 pointer-events-none'}`}>
+        <div className='flex items-center justify-between border-b border-neutral-200 px-5 py-3'>
           <h1 className='font-medium'>Order Detail</h1>
           <AiOutlineClose onClick={() => setOpenOrderDetailOverlay(false)} className='cursor-pointer' />
         </div>

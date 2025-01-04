@@ -53,9 +53,9 @@ const OrderHistory = () => {
     <>
       <HeadInfo title='Order History' />
       <Navbar />
-      <div className='px-20 mt-4'>
+      <div className='md:px-20 px-6 mt-4'>
         <h1 className='font-medium text-lg text-primary'>Order History</h1>
-        <div className='w-full mt-8'>
+        <div className='max-w-full mt-8 overflow-x-auto'>
           {
             loading
             ? <Loader size='2xl' />
@@ -100,12 +100,12 @@ const OrderHistory = () => {
                     </table>
                   )
                   : (
-                    <div className='flex flex-col items-center mt-16'>
+                    <div className='flex flex-col items-center mt-16 md:px-0 px-6'>
                       <div className='relative'>
                         <IoShirt className='text-gray-300 text-9xl' />
                         <div className='absolute w-3 h-[200px] rotate-45 bg-gray-300 -top-8 left-1/2 -translate-x-1/2' />
                       </div>
-                      <p className='text-gray-400 mt-14'>You don&apos;t have any order history right now</p>
+                      <p className='text-gray-400 text-center mt-14'>You don&apos;t have any order history right now</p>
                     </div>
                   )
                 }

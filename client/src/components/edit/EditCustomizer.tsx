@@ -112,7 +112,7 @@ const EditCustomizer = ({
   return (
     <>
       <div>
-        <div className='absolute top-1/2 left-12 -translate-y-1/2 py-4 rounded-md glassmorphism px-3 flex flex-col items-center gap-8'>
+        <div className='absolute top-1/2 md:left-12 left-6 -translate-y-1/2 py-4 rounded-md glassmorphism px-3 flex flex-col items-center gap-8'>
           <IoMdArrowRoundBack onClick={() => navigate('/saved')} className='text-3xl text-primary cursor-pointer' />
           <div ref={colorPickerRef} className='relative'>
             <img onClick={() => setIsOpenColorPicker(!isOpenColorPicker)} src='/icons/paint.png' alt='Paint' className='w-9 h-9 cursor-pointer' />
@@ -168,7 +168,7 @@ const EditCustomizer = ({
             }
           </div>
         </div>
-        <div className='absolute top-1/2 right-12 -translate-y-1/2 py-4 rounded-md glassmorphism px-3 flex flex-col items-center gap-8'>
+        <div className='absolute top-1/2 md:right-12 right-6 -translate-y-1/2 py-4 rounded-md glassmorphism px-3 flex flex-col items-center gap-8'>
           <div onClick={() => setOpenEditProductOverlay(true)}>
             <IoMdSave className='text-3xl text-primary cursor-pointer' />
           </div>

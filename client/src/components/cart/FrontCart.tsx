@@ -85,7 +85,7 @@ const FrontCart = ({ setCurrentComp }: IProps) => {
 
   return (
     <>
-      <div className='flex gap-20 px-20 mt-10 mb-16'>
+      <div className='flex md:flex-row flex-col md:gap-20 gap-12 md:px-20 px-6 mt-14 mb-16'>
         <div className='flex-[3]'>
           <div>
             <div className='flex items-center justify-between'>

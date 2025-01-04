@@ -25,12 +25,12 @@ const Cart = () => {
       {
         snap.cart.length === 0
         ? (
-          <div className='flex flex-col items-center mt-20'>
+          <div className='flex flex-col items-center mt-20 md:px-0 px-6'>
             <div className='relative'>
               <IoShirt className='text-gray-300 text-9xl' />
               <div className='absolute w-3 h-[200px] rotate-45 bg-gray-300 -top-8 left-1/2 -translate-x-1/2' />
             </div>
-            <p className='text-gray-400 mt-14'>Your cart is currently empty</p>
+            <p className='text-gray-400 text-center mt-14'>Your cart is currently empty</p>
           </div>
         )
         : (

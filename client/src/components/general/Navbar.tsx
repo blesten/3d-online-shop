@@ -71,10 +71,10 @@ const Navbar = ({ isFixed }: IProps) => {
 
   return (
     <>
-      <div className={`flex items-center justify-between px-20 py-8 ${isFixed ? 'fixed top-0 w-full left-0' : ''}`}>
+      <div className={`flex items-center justify-between md:px-20 px-6 py-8 ${isFixed ? 'fixed top-0 w-full left-0' : ''}`}>
         <Link to='/' className='flex items-center gap-5 outline-none'>
           <img src='/images/logo.svg' alt='Stanley Claudius - 3D Online Shop Sample Works'  className='w-10 h-10' />
-          <h1 className='text-primary font-semibold text-lg'>Stitch Lab</h1>
+          <h1 className='md:block hidden text-primary font-semibold text-lg'>Stitch Lab</h1>
         </Link>
         <div className='flex items-center gap-9'>
           <Link to='/saved' className='outline-none relative'>

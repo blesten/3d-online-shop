@@ -70,8 +70,8 @@ const ChangePassword = ({ openChangePasswordOverlay, setOpenChangePasswordOverla
   }, [openChangePasswordOverlay, setOpenChangePasswordOverlay])
   
   return (
-    <div className={`fixed top-0 left-0 right-0 bottom-0 bg-[rgba(0,0,0,.7)] flex items-center justify-center transition duration-200 ${openChangePasswordOverlay ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'} z-40`}>
-      <div ref={changePasswordOverlayRef} className={`bg-white w-1/3 rounded-md transition duration-200 ${openChangePasswordOverlay ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-14 pointer-events-none'}`}>
+    <div className={`fixed top-0 left-0 right-0 bottom-0 bg-[rgba(0,0,0,.7)] flex items-center justify-center transition duration-200 ${openChangePasswordOverlay ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'} z-40 px-6`}>
+      <div ref={changePasswordOverlayRef} className={`bg-white xl:w-1/3 md:w-2/3 w-full rounded-md transition duration-200 ${openChangePasswordOverlay ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-14 pointer-events-none'}`}>
         <div className='flex items-center justify-between p-4 border-b border-neutral-200'>
           <h1 className='font-medium'>Change Password</h1>
           <AiOutlineClose onClick={() => setOpenChangePasswordOverlay(false)} className='cursor-pointer' />

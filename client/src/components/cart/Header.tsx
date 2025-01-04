@@ -4,7 +4,7 @@ interface IProps {
 
 const Header = ({ currentComp }: IProps) => {
   return (
-    <div className='flex item-center justify-center gap-4 mt-2'>
+    <div className='flex item-center justify-center gap-4 mt-4 md:px-0 px-6'>
       <div className='flex flex-col items-center justify-center'>
         <div className={`w-7 h-7 rounded-full ${currentComp === 'front' ? 'bg-primary text-white font-semibold' : 'bg-white text-[#ffa07a] border border-[#ffa07a]'} text-xs flex items-center justify-center`}>
           <p>1</p>

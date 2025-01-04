@@ -25,8 +25,8 @@ const Authentication = ({ openAuthenticationOverlay, setOpenAuthenticationOverla
   }, [openAuthenticationOverlay, setOpenAuthenticationOverlay])
 
   return (
-    <div className={`fixed top-0 left-0 bottom-0 right-0 bg-[rgba(0,0,0,.7)] flex items-center justify-center ${openAuthenticationOverlay ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'} z-50`}>
-      <div ref={authenticationOverlayRef} className={`p-6 w-1/3 bg-white rounded-md transition duration-200 ${openAuthenticationOverlay ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-14 pointer-events-none'}`}>
+    <div className={`fixed top-0 left-0 bottom-0 md:px-0 px-6 right-0 bg-[rgba(0,0,0,.7)] flex items-center justify-center ${openAuthenticationOverlay ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'} z-50`}>
+      <div ref={authenticationOverlayRef} className={`p-6 xl:w-1/3 lg:w-1/2 md:w-2/3 w-full bg-white rounded-md transition duration-200 ${openAuthenticationOverlay ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-14 pointer-events-none'}`}>
         {
           selectedAuthScreen === 'signIn' &&
           <SignIn

@@ -6,12 +6,11 @@ const EditCameraRig = ({ children }: { children: any }) => {
   const cameraRef = useRef<any>()
 
   useFrame((state, delta) => {
-    // const isBreakpoint = window.innerWidth <= 1260
     const isMobile = window.innerWidth <= 600
 
     let targetPosition: any = [-5, -1, 2]
     if (isMobile)
-      targetPosition = [0, 0, 2.5]
+      targetPosition = [0, -.17, 2.5]
     else
       targetPosition = [0, -.14, 2]
 

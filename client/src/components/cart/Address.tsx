@@ -134,7 +134,7 @@ const Address = ({ setCurrentComp }: IProps) => {
   }, [])
 
   return (
-    <div className='px-20 mt-12 mb-16 mx-auto w-1/2'>
+    <div className='md:px-20 px-6 mt-14 mb-16 mx-auto xl:w-1/2 w-full'>
       <div onClick={() => setCurrentComp('front')} className='text-primary flex items-center gap-3 cursor-pointer w-fit'>
         <FaArrowLeft />
         <p className='text-sm font-semibold'>Back</p>

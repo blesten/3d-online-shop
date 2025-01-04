@@ -23,6 +23,7 @@ const Saved = () => {
   const [selectedShirtName, setSelectedShirtName] = useState('')
   const [openDeleteProductOverlay, setOpenDeleteProductOverlay] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [deviceRes, setDeviceRes] = useState('desktop')
 
   const navigate = useNavigate()
   
@@ -105,6 +106,24 @@ const Saved = () => {
     getSavedData()
   }, [snap.user])
 
+  useEffect(() => {
+    const updateDeviceRes = () => {
+      const width = window.innerWidth;
+      if (width <= 768) {
+        setDeviceRes('mobile')
+      } else if (width <= 1024) {
+        setDeviceRes('tablet')
+      } else {
+        setDeviceRes('desktop')
+      }
+    }
+
+    updateDeviceRes()
+
+    window.addEventListener('resize', updateDeviceRes)
+    return () => window.removeEventListener('resize', updateDeviceRes)
+  }, [])
+
   return (
     <>
       <HeadInfo title='Saved' />
@@ -118,97 +137,54 @@ const Saved = () => {
               {
                 snap.saved.length === 0
                 ? (
-                  <div className='flex flex-col items-center mt-12'>
+                  <div className='flex flex-col items-center mt-12 md:px-0 px-6'>
                     <div className='relative'>
                       <IoShirt className='text-gray-300 text-9xl' />
                       <div className='absolute w-3 h-[200px] rotate-45 bg-gray-300 -top-8 left-1/2 -translate-x-1/2' />
                     </div>
-                    <p className='text-gray-400 mt-14'>Oops! It seems like you haven't customized any shirt yet.</p>
+                    <p className='text-gray-400 text-center mt-14'>Oops! It seems like you haven't customized any shirt yet.</p>
                   </div>
                 )
                 : (
-                  <>
-                    {
-                      snap.saved.length > 0 &&
-                      snap.saved.length > 4
-                      ? (
-                        <Swiper
-                          style={{ height: '450px', width: '100%', marginTop: '25px' }}
-                          spaceBetween={90}
-                          slidesPerView={snap.saved.length < 4 ? snap.saved.length : 4}
-                          slidesPerGroup={1}
-                          centeredSlides={true}
-                          grabCursor={true}
-                          loop={true}
-                        >
-                          {
-                            snap.saved.map((item, idx) => (
-                              <SwiperSlide key={idx}>
-                                <div className='h-[350px]'>
-                                  <Canvas camera={{ fov: 8 }}>
-                                    <ambientLight intensity={.5} />
-                                    <Environment preset='city' />
-                                    <Center>
-                                      <StaticShirt 
-                                        isLogoTexture={item.isLogoTexture}
-                                        isShirtTexture={item.isShirtTexture}
-                                        shirtColor={item.shirtColor}
-                                        shirtLogo={item.shirtLogo === 'default' ? '/images/default_texture.png' : item.shirtLogo}
-                                        shirtTexture={item.shirtTexture === 'default' ? '/images/default_texture.png' : item.shirtTexture}
-                                      />
-                                    </Center>
-                                  </Canvas>
-                                  <h1 className='truncate text-center mt-5 font-medium text-gray-600 capitalize'>{item.name}</h1>
-                                  <div className='flex items-center justify-center glassmorphism rounded-lg w-fit m-auto mt-3 text-2xl gap-5 p-3'>
-                                    {
-                                      snap.cart.find(it => it.id === item.id)
-                                      ? <MdShoppingBag onClick={() => handleAddToCart(item.id)} className='text-primary cursor-pointer' />
-                                      : <MdOutlineShoppingBag onClick={() => handleAddToCart(item.id)} className='text-primary cursor-pointer' />
-                                    }
-                                    <MdEdit onClick={() => handleClickEdit(item.id)} className='text-primary cursor-pointer' />
-                                    <IoMdTrash onClick={() => handleClickDelete(item.id, item.name)} className='text-red-500 cursor-pointer' />
-                                  </div>
-                                </div>
-                              </SwiperSlide>
-                            ))
-                          }
-                        </Swiper>
-                      )
-                      : (
-                        <div className='flex gap-20 justify-center -mt-12'>
-                          {
-                            snap.saved.map((item, idx) => (
-                              <div key={idx} className='h-[350px]'>
-                                <Canvas camera={{ fov: 8 }}>
-                                  <ambientLight intensity={.5} />
-                                  <Environment preset='city' />
-                                  <Center>
-                                    <StaticShirt 
-                                      isLogoTexture={item.isLogoTexture}
-                                      isShirtTexture={item.isShirtTexture}
-                                      shirtColor={item.shirtColor}
-                                      shirtLogo={item.shirtLogo === 'default' ? '/images/default_texture.png' : item.shirtLogo}
-                                      shirtTexture={item.shirtTexture === 'default' ? '/images/default_texture.png' : item.shirtTexture}
-                                    />
-                                  </Center>
-                                </Canvas>
-                                <h1 className='truncate text-center mt-5 font-medium text-gray-600 capitalize'>{item.name}</h1>
-                                <div className='flex items-center justify-center glassmorphism rounded-lg w-fit m-auto mt-3 text-2xl gap-5 p-3'>
-                                  {
-                                    snap.cart.find(it => it.id === item.id)
-                                    ? <MdShoppingBag onClick={() => handleAddToCart(item.id)} className='text-primary cursor-pointer' />
-                                    : <MdOutlineShoppingBag onClick={() => handleAddToCart(item.id)} className='text-primary cursor-pointer' />
-                                  }
-                                  <MdEdit onClick={() => handleClickEdit(item.id)} className='text-primary cursor-pointer' />
-                                  <IoMdTrash onClick={() => handleClickDelete(item.id, item.name)} className='text-red-500 cursor-pointer' />
-                                </div>
+                    <Swiper
+                      style={{ height: '450px', width: '100%', marginTop: '25px' }}
+                      spaceBetween={90}
+                      slidesPerView={deviceRes === 'desktop' ? 3 : deviceRes === 'tablet' ? 2 : 1 }
+                      slidesPerGroup={1}
+                      grabCursor={true}
+                    >
+                      {
+                        snap.saved.map((item, idx) => (
+                          <SwiperSlide key={idx}>
+                            <div className='h-[350px]'>
+                              <Canvas camera={{ fov: 8 }}>
+                                <ambientLight intensity={.5} />
+                                <Environment preset='city' />
+                                <Center>
+                                  <StaticShirt 
+                                    isLogoTexture={item.isLogoTexture}
+                                    isShirtTexture={item.isShirtTexture}
+                                    shirtColor={item.shirtColor}
+                                    shirtLogo={item.shirtLogo === 'default' ? '/images/default_texture.png' : item.shirtLogo}
+                                    shirtTexture={item.shirtTexture === 'default' ? '/images/default_texture.png' : item.shirtTexture}
+                                  />
+                                </Center>
+                              </Canvas>
+                              <h1 className='truncate text-center mt-5 font-medium text-gray-600 capitalize'>{item.name}</h1>
+                              <div className='flex items-center justify-center glassmorphism rounded-lg w-fit m-auto mt-3 text-2xl gap-5 p-3'>
+                                {
+                                  snap.cart.find(it => it.id === item.id)
+                                  ? <MdShoppingBag onClick={() => handleAddToCart(item.id)} className='text-primary cursor-pointer' />
+                                  : <MdOutlineShoppingBag onClick={() => handleAddToCart(item.id)} className='text-primary cursor-pointer' />
+                                }
+                                <MdEdit onClick={() => handleClickEdit(item.id)} className='text-primary cursor-pointer' />
+                                <IoMdTrash onClick={() => handleClickDelete(item.id, item.name)} className='text-red-500 cursor-pointer' />
                               </div>
-                            ))
-                          }
-                        </div>
-                      )
-                    }
-                  </>
+                            </div>
+                          </SwiperSlide>
+                        ))
+                      }
+                    </Swiper>
                 )
               }
             </>

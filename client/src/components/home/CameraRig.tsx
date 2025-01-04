@@ -12,14 +12,14 @@ const CameraRig = ({ isCustomize, children }: IProps) => {
 
   useFrame((state, delta) => {
     const isBreakpoint = window.innerWidth <= 1260
-    const isMobile = window.innerWidth <= 600
+    const isMobile = window.innerWidth <= 1024
 
     let targetPosition: any = [-.5, -.1, 2]
     if (!isCustomize) {
-      if (isBreakpoint) targetPosition = [0, 0, 2]
-      if (isMobile) targetPosition = [0, .2, 2.5]
+      if (isBreakpoint) targetPosition = [-.47, -.11, 2]
+      if (isMobile) targetPosition = [0, -.25, 2.5]
     } else {
-      if (isMobile) targetPosition = [0, 0, 2.5]
+      if (isMobile) targetPosition = [0, -.17, 2.5]
       else targetPosition = [0, -.14, 2]
     }
 

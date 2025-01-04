@@ -156,7 +156,7 @@ const CartItem = ({
           </div>
           <div className='flex items-center gap-2'>
             <FaShippingFast className='text-gray-400 text-lg' />
-            <p className='text-sm text-neutral-500'>Express delivery in <span className='font-medium text-black'>{shippingDaysCount} {shippingDaysCount > 1 ? 'days' : 'day'}</span></p>
+            <p className='text-sm text-neutral-500'><span className='md:inline-block hidden'>Express delivery in</span> <span className='font-medium text-black'>{shippingDaysCount} {shippingDaysCount > 1 ? 'days' : 'day'}</span></p>
           </div>
         </div>
         <div className='flex items-center justify-between mt-6'>
