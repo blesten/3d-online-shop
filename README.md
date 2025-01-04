@@ -78,7 +78,7 @@ To get started with this project locally, follow below steps:
 
 ### Prerequisites
 
-Make sure you have Docker, Node.js, and package manager (either npm or yarn) installed
+Make sure you have Node.js, and package manager (either npm or yarn) installed
 
 >**FYI**: This project uses **npm** as the package manager, but you're free to use **yarn** too.
 
