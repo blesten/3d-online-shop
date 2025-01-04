@@ -1,7 +1,8 @@
+import { SERVER_URL } from './../config/key'
 import axios from 'axios'
 
 export const getDataAPI = async(url: string, token?: string) => {
-  const res = await axios.get(`http://localhost:5000/api/v1/${url}`, {
+  const res = await axios.get(`${SERVER_URL}/api/v1/${url}`, {
     headers: {
       Authorization: `${token}`
     },
@@ -12,7 +13,7 @@ export const getDataAPI = async(url: string, token?: string) => {
 }
 
 export const postDataAPI = async(url: string, data: object, token?: string) => {
-  const res = await axios.post(`http://localhost:5000/api/v1/${url}`, data, {
+  const res = await axios.post(`${SERVER_URL}/api/v1/${url}`, data, {
     headers: {
       Authorization: `${token}`
     },
@@ -23,7 +24,7 @@ export const postDataAPI = async(url: string, data: object, token?: string) => {
 }
 
 export const patchDataAPI = async(url: string, data: object, token?: string) => {
-  const res = await axios.patch(`http://localhost:5000/api/v1/${url}`, data, {
+  const res = await axios.patch(`${SERVER_URL}/api/v1/${url}`, data, {
     headers: {
       Authorization: `${token}`
     },
@@ -34,7 +35,7 @@ export const patchDataAPI = async(url: string, data: object, token?: string) => 
 }
 
 export const deleteDataAPI = async(url: string, token?: string) => {
-  const res = await axios.delete(`http://localhost:5000/api/v1/${url}`, {
+  const res = await axios.delete(`${SERVER_URL}/api/v1/${url}`, {
     headers: {
       Authorization: `${token}`
     },
