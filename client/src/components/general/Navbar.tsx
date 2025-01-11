@@ -71,7 +71,7 @@ const Navbar = ({ isFixed }: IProps) => {
 
   return (
     <>
-      <div className={`flex items-center justify-between md:px-20 px-6 py-8 ${isFixed ? 'fixed top-0 w-full left-0' : ''}`}>
+      <div className={`flex items-center justify-between md:px-20 px-6 py-8 z-40 ${isFixed ? 'fixed top-0 w-full left-0' : ''}`}>
         <Link to='/' className='flex items-center gap-5 outline-none'>
           <img src='/images/logo.svg' alt='Stanley Claudius - 3D Online Shop Sample Works'  className='w-10 h-10' />
           <h1 className='md:block hidden text-primary font-semibold text-lg'>Stitch Lab</h1>
@@ -115,16 +115,16 @@ const Navbar = ({ isFixed }: IProps) => {
                   }
                 </div>
                 <div className={`shadow-md absolute top-full mt-2 right-0 w-[200px] bg-white rounded-md border border-neutral-100 z-40 transition duration-100 origin-top ${openProfileDropdown ? 'scale-y-100 pointer-events-auto' : 'scale-y-0 pointer-events-none'}`}>
-                  <div onClick={() => setOpenChangePasswordOverlay(true)} className='flex items-center gap-3 py-3 cursor-pointer px-5 text-sm transition'>
+                  <div onClick={() => setOpenChangePasswordOverlay(true)} className='flex items-center gap-3 py-3 cursor-pointer px-5 text-sm transition hover:bg-gray-100 rounded-t-md'>
                     <BsKeyFill className='text-orange-500' />
                     <p>Change Password</p>
                   </div>
-                  <Link to='/order_history' className='flex items-center gap-3 py-3 px-5 text-sm transition outline-none'>
+                  <Link to='/order_history' className='flex items-center gap-3 py-3 px-5 text-sm transition outline-none hover:bg-gray-100'>
                     <IoShirt className='text-green-400' />
                     <p>Order History</p>
                   </Link>
                   <hr />
-                  <div onClick={handleLogout} className='flex items-center gap-3 py-3 px-5 text-sm transition cursor-pointer'>
+                  <div onClick={handleLogout} className='flex items-center gap-3 py-3 px-5 text-sm transition cursor-pointer hover:bg-gray-100 rounded-b-md'>
                     <MdLogout className='text-red-500' />
                     <p>Logout</p>
                   </div>

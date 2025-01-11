@@ -1,9 +1,10 @@
 import { Center, Environment } from '@react-three/drei'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { AiOutlineClose } from 'react-icons/ai'
 import { ICheckout } from './../../utils/interface'
 import { Canvas } from '@react-three/fiber'
 import StaticShirt from './../saved/StaticShirt'
+import { getDataAPI } from '../../utils/baseAPI'
 
 interface IProps {
   openOrderDetailOverlay: boolean
@@ -12,7 +13,41 @@ interface IProps {
 }
 
 const OrderDetail = ({ openOrderDetailOverlay, setOpenOrderDetailOverlay, selectedOrder }: IProps) => {
+  const [provinceName, setProvinceName] = useState('')
+  const [cityName, setCityName] = useState('')
+  const [districtName, setDistrictName] = useState('')
+  
   const orderDetailOverlayRef = useRef() as React.MutableRefObject<HTMLDivElement>
+
+  useEffect(() => {
+    const getProvince = async(id: string) => {
+      const res = await getDataAPI(`province/${id}`)
+      setProvinceName(res.data.province.name)
+    }
+
+    if (selectedOrder.province)
+      getProvince(selectedOrder.province)
+  }, [selectedOrder.province])
+
+  useEffect(() => {
+    const getCity = async(id: string) => {
+      const res = await getDataAPI(`city/id/${id}`)
+      setCityName(res.data.city.name)
+    }
+
+    if (selectedOrder.city)
+      getCity(selectedOrder.city)
+  }, [selectedOrder.city])
+
+  useEffect(() => {
+    const getDistrict = async(id: string) => {
+      const res = await getDataAPI(`district/id/${id}`)
+      setDistrictName(res.data.district.name)
+    }
+
+    if (selectedOrder.district)
+      getDistrict(selectedOrder.district)
+  }, [selectedOrder.district])
 
   useEffect(() => {
     const checkIfClickedOutside = (e: MouseEvent) => {
@@ -72,7 +107,7 @@ const OrderDetail = ({ openOrderDetailOverlay, setOpenOrderDetailOverlay, select
               {selectedOrder.address}
             </p>
             <p className='text-neutral-600 text-xs mt-2'>
-              {selectedOrder.country}, {selectedOrder.province}, {selectedOrder.city}, {selectedOrder.district}, {selectedOrder.postalCode}
+              {selectedOrder.country}, {provinceName}, {cityName}, {districtName}, {selectedOrder.postalCode}
             </p>
             <p className='text-neutral-600 text-xs mt-2'>
               {selectedOrder.recipientName}, {selectedOrder.recipientPhoneNumber}, {selectedOrder.recipientEmail}

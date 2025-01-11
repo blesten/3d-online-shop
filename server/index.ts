@@ -23,10 +23,13 @@ app.use(morgan('dev'))
 app.use(cookieParser())
 
 app.use('/api/v1/shippingAddress', routers.shippingAddress)
+app.use('/api/v1/province', routers.province)
 app.use('/api/v1/checkout', routers.checkout)
+app.use('/api/v1/district', routers.district)
 app.use('/api/v1/saved', routers.saved)
 app.use('/api/v1/user', routers.user)
 app.use('/api/v1/cart', routers.cart)
+app.use('/api/v1/city', routers.city)
 
 connectDB()
 app.listen(process.env.PORT, () => console.log(`Server is running on PORT ${process.env.PORT}`))

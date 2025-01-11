@@ -1,12 +1,13 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import { ICity, IDistrict, IProvince } from './../../utils/interface'
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa6'
 import { getDataAPI, postDataAPI } from './../../utils/baseAPI'
 import { STRIPE_PUBLISHABLE_KEY } from './../../config/key'
 import { useSnapshot } from 'valtio'
 import { loadStripe } from '@stripe/stripe-js'
 import { toast } from 'react-toastify'
-import state from './../../store'
 import Loader from './../general/Loader'
+import state from './../../store'
 
 interface IProps {
   setCurrentComp: React.Dispatch<React.SetStateAction<string>>
@@ -14,6 +15,9 @@ interface IProps {
 
 const Address = ({ setCurrentComp }: IProps) => {
   const [loading, setLoading] = useState(false)
+  const [provinces, setProvinces] = useState<IProvince[]>([])
+  const [cities, setCities] = useState<ICity[]>([])
+  const [districts, setDistricts] = useState<IDistrict[]>([])
 
   const snap = useSnapshot(state)
   
@@ -133,6 +137,35 @@ const Address = ({ setCurrentComp }: IProps) => {
     getAddressData()
   }, [])
 
+  useEffect(() => {
+    const getProvinceData = async() => {
+      const res = await getDataAPI('province')
+      setProvinces(res.data.data)
+    }
+
+    getProvinceData()
+  }, [])
+
+  useEffect(() => {
+    const getCityData = async(provinceId: string) => {
+      const res = await getDataAPI(`city/${provinceId}`)
+      setCities(res.data.data)
+    }
+
+    if (addressData.province)
+      getCityData(addressData.province)
+  }, [addressData.province])
+
+  useEffect(() => {
+    const getDistrictData = async(cityId: string) => {
+      const res = await getDataAPI(`district/${cityId}`)
+      setDistricts(res.data.data)
+    }
+
+    if (addressData.city)
+      getDistrictData(addressData.city)
+  }, [addressData.city])
+
   return (
     <div className='md:px-20 px-6 mt-14 mb-16 mx-auto xl:w-1/2 w-full'>
       <div onClick={() => setCurrentComp('front')} className='text-primary flex items-center gap-3 cursor-pointer w-fit'>
@@ -151,21 +184,33 @@ const Address = ({ setCurrentComp }: IProps) => {
           <label htmlFor='province' className='text-sm font-medium'>Province</label>
           <select name='province' id='province' value={addressData.province} onChange={handleChange} className='border outline-none w-full rounded-md p-3 text-sm mt-3'>
             <option value=''>Select province</option>
-            <option value='Jakarta'>Jakarta</option>
+            {
+              provinces.map(item => (
+                <option key={item._id} value={item._id}>{item.name}</option>
+              ))
+            }
           </select>
         </div>
         <div className='mb-7'>
           <label htmlFor='city' className='text-sm font-medium'>City</label>
           <select name='city' id='city' value={addressData.city} onChange={handleChange} className='border outline-none w-full rounded-md p-3 text-sm mt-3'>
             <option value=''>Select city</option>
-            <option value='North Jakarta'>North Jakarta</option>
+            {
+              cities.map(item => (
+                <option value={item._id}>{item.name}</option>
+              ))
+            }
           </select>
         </div>
         <div className='mb-7'>
           <label htmlFor='district' className='text-sm font-medium'>District</label>
           <select name='district' id='district' value={addressData.district} onChange={handleChange} className='border outline-none w-full rounded-md p-3 text-sm mt-3'>
             <option value=''>Select district</option>
-            <option value='Kelapa Gading'>Kelapa Gading</option>
+            {
+              districts.map(item => (
+                <option value={item._id}>{item.name}</option>
+              ))
+            }
           </select>
         </div>
         <div className='mb-7'>

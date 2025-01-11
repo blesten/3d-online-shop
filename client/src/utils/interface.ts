@@ -60,3 +60,22 @@ export interface ICheckoutProduct {
   isLogoTexture: boolean
   isShirtTexture: boolean
 }
+
+export interface IProvince {
+  _id: string
+  name: string
+  externalId: string
+}
+
+export interface ICity {
+  _id: string
+  provinceId: string
+  name: string
+  externalId: string
+}
+
+export interface IDistrict {
+  _id: string
+  cityId: string
+  name: string
+}

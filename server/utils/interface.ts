@@ -74,7 +74,7 @@ export interface ICheckout extends IGeneralField {
   address: string
 }
 
-export interface ICheckoutProduct {
+export interface ICheckoutProduct extends IGeneralField {
   id: string
   qty: number
   name: string
@@ -86,4 +86,20 @@ export interface ICheckoutProduct {
   shirtTexture: string
   isLogoTexture: boolean
   isShirtTexture: boolean
+}
+
+export interface IProvince extends IGeneralField {
+  name: string
+  externalId: string
+}
+
+export interface ICity extends IGeneralField {
+  provinceId: ObjectId
+  name: string
+  externalId: string
+}
+
+export interface IDistrict extends IGeneralField {
+  cityId: ObjectId
+  name: string
 }
