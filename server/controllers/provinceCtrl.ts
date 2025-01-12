@@ -2,28 +2,6 @@ import { Request, Response } from 'express'
 import Province from '../models/Province'
 
 const provinceCtrl = {
-  create: async(req: Request, res: Response) => {
-    try {
-      const { name, externalId } = req.body
-
-      if (!name || !externalId) {
-        res.status(400).json({ msg: 'Please provide province name' })
-        return
-      }
-
-      const newProvince = new Province({
-        name,
-        externalId
-      })
-      await newProvince.save()
-
-      res.status(200).json({
-        data: newProvince
-      })
-    } catch (err: any) {
-      res.status(500).json({ msg: err.message })
-    }
-  },
   read: async(req: Request, res: Response) => {
     try {
       const provinces = await Province.find()

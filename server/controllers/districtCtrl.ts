@@ -3,32 +3,6 @@ import City from '../models/City'
 import District from '../models/District'
 
 const districtCtrl = {
-  create: async(req: Request, res: Response) => {
-    try {
-      const { cityId, name } = req.body
-
-      if (!cityId || !name) {
-        res.status(400).json({ msg: 'Please provide city ID and name' })
-        return
-      }
-
-      const city = await City.findById(cityId)
-      if (!city) {
-        res.status(400).json({ msg: 'Please provide valid city ID' })
-        return
-      }
-
-      const newDistrict = new District({
-        cityId,
-        name
-      })
-      await newDistrict.save()
-
-      res.status(200).json({ data: newDistrict })
-    } catch (err: any) {
-      res.status(500).json({ msg: err.message })
-    }
-  },
   read: async(req: Request, res: Response) => {
     try {
       const { cityId } = req.params
